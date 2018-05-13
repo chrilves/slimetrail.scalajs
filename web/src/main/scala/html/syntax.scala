@@ -40,6 +40,7 @@ object syntax {
 
   def div[A]: FaitNoeud[A] = noeud[A]("div")
   def span[A]: FaitNoeud[A] = noeud[A]("span")
+  def a[A]: FaitNoeud[A] = noeud[A]("a")
 
   def p[A]: FaitNoeud[A] = noeud[A]("p")
   def texte(s: String): Texte = Texte(s)
@@ -100,6 +101,7 @@ object syntax {
   def y1: FaitAttr = attr("y1")
   def y2: FaitAttr = attr("y2")
   def xlinkHref: FaitAttr = attr("xlink:href", "http://www.w3.org/1999/xlink")
+  def href: FaitAttr = attr("href")
 
   def checked(b: Boolean): Parametre[Nothing] =
     if (b)

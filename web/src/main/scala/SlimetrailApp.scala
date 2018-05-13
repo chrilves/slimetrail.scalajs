@@ -107,19 +107,28 @@ object SlimetrailApp extends ApplicationElm {
 
     svg(
       viewBox(s"-1 ${-demiHauteur} ${largeur} ${2 * demiHauteur}"),
-      transform("scale(1, -1)"),
       style("stroke-width: 0.01;"),
       if (!m.enCours) onclick(NouvellePartie: Msg) else nop
     )(
-      (symbol(id("hexagon"),
-              x("-1"),
-              y("-1"),
-              width("2"),
-              height("2"),
-              viewBox("-1 -1 2 2"))(
-        polygon(style("stroke:black;"), points(hexagon.mkString(" ")))()
-      ) ::
-        (hexagons ++ cheminDesCoups)): _*
+      g(id("plateau"), transform("scale(1,-1)"))(
+        symbol(id("hexagon"),
+               x("-1"),
+               y("-1"),
+               width("2"),
+               height("2"),
+               viewBox("-1 -1 2 2"))(
+          polygon(style("stroke:black;"), points(hexagon.mkString(" ")))()
+        ),
+        g(id("hexagones"))(hexagons: _*),
+        g(id("chemin"))(cheminDesCoups: _*)
+      ),
+      g(id("regles"))(
+        text(
+          x("0"),
+          y(s"${-0.8 * demiHauteur}"),
+          style("font-size: 10%;"),
+          `class`("titre")
+        )(texte("Slimetrail")))
     )
   }
 

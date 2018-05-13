@@ -1,2 +1,7 @@
 *.class
 *.log
+target/
+.js/
+.jvm/
+fast.html
+full.html

@@ -5,18 +5,24 @@ import slimetrail._
 import outils._
 
 object SlimetrailApp extends ApplicationElm {
-  private val debug: Boolean = true
+  private val debug: Boolean = false
 
   @inline private def log(s: => String): Unit =
     if (debug) println(s)
 
   type Model = Partie
-  type Msg = Coup
+
+  sealed abstract class Msg
+  final case class UnCoup(coup: Coup) extends Msg
+  final case object NouvellePartie extends Msg
 
   val modelInitial: Partie = Partie.debut
 
-  def miseAJour(msg: Coup, model: Partie): Partie =
-    model.jouerUnCoup(msg, model).getOrElse(model)
+  def miseAJour(msg: Msg, model: Partie): Partie =
+    msg match {
+      case UnCoup(c)      => model.jouerUnCoup(c, model).getOrElse(model)
+      case NouvellePartie => Partie.debut
+    }
 
   def vue(m: Partie): Html[Msg] = {
     import html.syntax._
@@ -48,10 +54,13 @@ object SlimetrailApp extends ApplicationElm {
               else
                 classesCasesCoup.getOrElse(pos, "case-vide")
 
-            val reaction =
-              if (coupsValides.contains(pos)) onclick(Coup(pos)) else nop
+            val reaction: Parametre[Msg] =
+              if (coupsValides.contains(pos) && m.enCours)
+                onclick(UnCoup(Coup(pos)))
+              else
+                nop
 
-            val centre = (haut ** pos.haut.toDouble) + (bas ** pos.bas.toDouble)
+            val centre = coordonnees(pos)
 
             use(
               xlinkHref("#hexagon"),
@@ -66,10 +75,41 @@ object SlimetrailApp extends ApplicationElm {
         .toVector
         .toList
 
+    val cheminDesCoups: List[Html[Msg]] = {
+      val acc =
+        m.historique.foldLeft(
+          (coordonnees(Partie.debut.positionActuelle),
+           Joueur.Premier: Joueur,
+           Nil: List[Html[Msg]])) {
+          case ((p1, j, acc), coup) =>
+            val laclasse: String =
+              j match {
+                case Joueur.Premier => "coup-premier-joueur"
+                case Joueur.Second  => "coup-second-joueur"
+              }
+
+            val p2 = coordonnees(coup.position)
+
+            val nouvelleLigne =
+              line(
+                x1(s"${p1.x}"),
+                y1(s"${p1.y}"),
+                x2(s"${p2.x}"),
+                y2(s"${p2.y}"),
+                `class`(laclasse),
+                style("stroke-width:0.1;")
+              )()
+
+            (p2, j.suivant, nouvelleLigne :: acc)
+        }
+      acc._3
+    }
+
     svg(
       viewBox(s"-1 ${-demiHauteur} ${largeur} ${2 * demiHauteur}"),
       transform("scale(1, -1)"),
-      style("stroke-width: 0.01;")
+      style("stroke-width: 0.01;"),
+      if (!m.enCours) onclick(NouvellePartie: Msg) else nop
     )(
       (symbol(id("hexagon"),
               x("-1"),
@@ -79,7 +119,7 @@ object SlimetrailApp extends ApplicationElm {
               viewBox("-1 -1 2 2"))(
         polygon(style("stroke:black;"), points(hexagon.mkString(" ")))()
       ) ::
-        hexagons): _*
+        (hexagons ++ cheminDesCoups)): _*
     )
   }
 
@@ -100,4 +140,7 @@ object SlimetrailApp extends ApplicationElm {
 
   val haut: Point = Point.polarDeg(math.sqrt(3), 30)
   val bas: Point = Point.polarDeg(math.sqrt(3), -30)
+
+  def coordonnees(pos: Position): Point =
+    (haut ** pos.haut.toDouble) + (bas ** pos.bas.toDouble)
 }

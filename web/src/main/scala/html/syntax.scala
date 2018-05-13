@@ -50,6 +50,7 @@ object syntax {
   def input[A]: FaitNoeud[A] = noeud[A]("input")
   def button[A]: FaitNoeud[A] = noeud[A]("button")
 
+  def svg[A]: FaitNoeud[A] = noeud[A]("svg", Namespace.SVG)
   def rect[A]: FaitNoeud[A] = noeud[A]("rect", Namespace.SVG)
   def polyline[A]: FaitNoeud[A] = noeud[A]("polyline", Namespace.SVG)
   def polygon[A]: FaitNoeud[A] = noeud[A]("polygon", Namespace.SVG)
@@ -58,7 +59,7 @@ object syntax {
   def defs[A]: FaitNoeud[A] = noeud[A]("defs", Namespace.SVG)
   def use[A]: FaitNoeud[A] = noeud[A]("use", Namespace.SVG)
   def text[A]: FaitNoeud[A] = noeud[A]("text", Namespace.SVG)
-  def svg[A]: FaitNoeud[A] = noeud[A]("svg", Namespace.SVG)
+  def line[A]: FaitNoeud[A] = noeud[A]("line", Namespace.SVG)
 
   val nop: Parametre[Nothing] = Parametre.Nop
 
@@ -94,6 +95,10 @@ object syntax {
   def fill: FaitAttr = attr("fill")
   def stroke: FaitAttr = attr("stroke")
   def strokeWidth: FaitAttr = attr("stroke-width")
+  def x1: FaitAttr = attr("x1")
+  def x2: FaitAttr = attr("x2")
+  def y1: FaitAttr = attr("y1")
+  def y2: FaitAttr = attr("y2")
   def xlinkHref: FaitAttr = attr("xlink:href", "http://www.w3.org/1999/xlink")
 
   def checked(b: Boolean): Parametre[Nothing] =

@@ -10,6 +10,7 @@ object Main {
 
   def main(args: Array[String]): Unit =
     auChargement {
-      SlimetrailApp.executer(document.getElementById("espaceScalaJS"), true)
+      new AppliWebSlimetrail(10)
+        .executer(document.getElementById("espaceScalaJS"), true)
     }
 }

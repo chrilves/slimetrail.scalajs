@@ -46,6 +46,27 @@ sealed abstract class Partie {
   val tour: Tour
   val historique: Vector[Coup]
 
+  final lazy val taille: Int = grille.taille
+  final lazy val objectifPremierJoueur: Position = Position(taille - 1, 0)
+  final lazy val objectifSecondJoueur: Position = Position(0, taille - 1)
+  final lazy val positionDeDepart: Position = Partie.positionDeDepart(taille)
+
+  final lazy val largeur: Double = 3 * taille.toDouble - 1
+  final lazy val demiHauteur: Double = taille * math.sin(math.Pi * 60 / 180)
+
+  final def objectif(j: Joueur): Position =
+    j match {
+      case Joueur.Premier => objectifPremierJoueur
+      case Joueur.Second  => objectifSecondJoueur
+    }
+
+  final def positionGagnante(p: Position): Option[Joueur] =
+    p match {
+      case `objectifPremierJoueur` => Some(Joueur.Premier)
+      case `objectifSecondJoueur`  => Some(Joueur.Second)
+      case _                       => None
+    }
+
   final def enCours: Boolean =
     tour match {
       case Tour.GagnePar(_) => false
@@ -53,7 +74,6 @@ sealed abstract class Partie {
     }
 
   final def coupsValides: Map[Position, Option[Joueur]] = {
-    import Partie._
     import Joueur._
 
     def positionsAtteignables(j: Joueur): Set[Position] =
@@ -104,7 +124,7 @@ sealed abstract class Partie {
           }
 
         coupsValides.get(c.position).map { _ =>
-          Partie.positionGagnante(c.position) match {
+          positionGagnante(c.position) match {
             case Some(j) => nouvellePartie(Tour.GagnePar(j))
             case _       => nouvellePartie(Tour.Au(j.suivant))
           }
@@ -127,26 +147,26 @@ sealed abstract class Partie {
 }
 
 object Partie {
-  val debut: Partie = new Partie {
-    val grille: Hexa[Case] = Hexa.fill(10)(Case(false))
-    val positionActuelle: Position = Position(4, 5)
-    val tour: Tour = Tour.Au(Joueur.Premier)
-    val historique: Vector[Coup] = Vector.empty
+  def positionDeDepart(taille: Int): Position = {
+    val max = taille - 1
+    val mid = max / 2
+    Position(mid, max - mid)
   }
 
-  val objectifPremierJoueur: Position = Position(9, 0)
-  val objectifSecondJoueur: Position = Position(0, 9)
+  def debut(taille_ : Int): Partie = {
+    val lataille = math.max(taille_, 3)
 
-  def objectif(j: Joueur): Position =
-    j match {
-      case Joueur.Premier => objectifPremierJoueur
-      case Joueur.Second  => objectifSecondJoueur
+    new Partie {
+      val grille: Hexa[Case] = Hexa.fill(lataille)(Case(false))
+      val positionActuelle: Position = Partie.positionDeDepart(taille)
+      val tour: Tour = Tour.Au(Joueur.Premier)
+      val historique: Vector[Coup] = Vector.empty
     }
+  }
 
-  def positionGagnante(p: Position): Option[Joueur] =
-    p match {
-      case `objectifPremierJoueur` => Some(Joueur.Premier)
-      case `objectifSecondJoueur`  => Some(Joueur.Second)
-      case _                       => None
-    }
+  val haut: Point = Point.polarDeg(math.sqrt(3), 30)
+  val bas: Point = Point.polarDeg(math.sqrt(3), -30)
+
+  def coordonnees(pos: Position): Point =
+    (haut ** pos.haut.toDouble) + (bas ** pos.bas.toDouble)
 }

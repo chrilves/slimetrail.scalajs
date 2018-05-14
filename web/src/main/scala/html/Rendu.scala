@@ -56,7 +56,7 @@ object Rendu {
 
         reactions.foreach {
           case Reaction(t, r) =>
-            b.addEventListener(t, r, true)
+            b.addEventListener(t, r, false)
         }
 
         enfants.foreach { enfant =>
@@ -81,14 +81,14 @@ object Rendu {
     anciennes_reactions.foreach {
       case re @ Reaction(t, r) =>
         log(s"[actualiserNoeud]  - Suppression réaction $re")
-        noeud.removeEventListener(t, r, true)
+        noeud.removeEventListener(t, r, false)
     }
 
     // Mise en place des nouvelles
     nouvelles_reactions.foreach {
       case re @ Reaction(t, r) =>
         log(s"[actualiserNoeud]  - Ajour réaction $re")
-        noeud.addEventListener(t, r, true)
+        noeud.addEventListener(t, r, false)
     }
 
     // Attributs enlevés

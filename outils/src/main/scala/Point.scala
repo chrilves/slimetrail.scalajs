@@ -41,4 +41,14 @@ object Point {
 
   def polarDeg(rayon: Double, angle: Double): Point =
     polar(rayon, deg2rat(angle))
+
+  val hexagonRayon1Centre0: List[Point] =
+    List(
+      Point.polarDeg(1, 0 * 60),
+      Point.polarDeg(1, 1 * 60),
+      Point.polarDeg(1, 2 * 60),
+      Point.polarDeg(1, 3 * 60),
+      Point.polarDeg(1, 4 * 60),
+      Point.polarDeg(1, 5 * 60)
+    )
 }

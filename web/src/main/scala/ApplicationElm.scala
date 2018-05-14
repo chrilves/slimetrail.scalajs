@@ -3,7 +3,7 @@ package slimetrail.web
 import org.scalajs.dom.raw._
 import slimetrail.web.html._
 
-abstract class ApplicationElm { self =>
+trait ApplicationElm { self =>
   private val debug = false
 
   @inline

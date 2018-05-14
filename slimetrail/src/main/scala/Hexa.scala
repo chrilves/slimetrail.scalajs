@@ -3,19 +3,19 @@ package slimetrail
 import outils._
 import scala.annotation._
 
-final class Hexa[+A](val size: Int, cells: Vector[A]) {
+final class Hexa[+A](val taille: Int, cells: Vector[A]) {
   private val debug: Boolean = false
   @inline private def log(s: => String): Unit =
     if (debug) println(s)
 
   private def offset(p: Position): Option[Int] =
-    if (p.haut >= 0 && p.haut < size && p.bas >= 0 && p.bas < size)
-      Some(p.haut * size + p.bas)
+    if (p.haut >= 0 && p.haut < taille && p.bas >= 0 && p.bas < taille)
+      Some(p.haut * taille + p.bas)
     else
       None
 
   private def position(i: Int): Position =
-    Position(haut = i / size, bas = i % size)
+    Position(haut = i / taille, bas = i % taille)
 
   def get(p: Position): Option[A] =
     offset(p).flatMap(cells.lift(_))
@@ -23,19 +23,19 @@ final class Hexa[+A](val size: Int, cells: Vector[A]) {
   def set[B >: A](position: Position, valeur: B): Hexa[B] =
     offset(position) match {
       case Some(i) =>
-        new Hexa[B](size, cells.updated(i, valeur))
+        new Hexa[B](taille, cells.updated(i, valeur))
       case _ => this
     }
 
   def map[B](f: A => B): Hexa[B] =
-    new Hexa[B](size, cells.map(f))
+    new Hexa[B](taille, cells.map(f))
 
   def indexedMap[B](f: (Position, A) => B): Hexa[B] = {
     val builder = Vector.newBuilder[B]
     for (i <- 0 to cells.size - 1) {
       builder += f(position(i), cells(i))
     }
-    new Hexa[B](size, builder.result)
+    new Hexa[B](taille, builder.result)
   }
 
   def toVector: Vector[A] = cells
@@ -56,7 +56,7 @@ final class Hexa[+A](val size: Int, cells: Vector[A]) {
     @tailrec
     def rec(added: Set[Position], toVisit: List[Position]): Boolean = {
       log(
-        s"[Hexa.atteignabePar] added.size=${added.size}, toVisit.size=${toVisit.size}, toVisit=${toVisit.take(5).mkString(",")}")
+        s"[Hexa.atteignabePar] added.size=${added.size}, toVisit.taille=${toVisit.size}, toVisit=${toVisit.take(5).mkString(",")}")
       toVisit match {
         case Nil =>
           false
@@ -122,11 +122,11 @@ final class Hexa[+A](val size: Int, cells: Vector[A]) {
 }
 
 object Hexa {
-  def fill[A](_size: Int)(value: A): Hexa[A] =
-    new Hexa[A](_size, Vector.fill(_size * _size)(value))
+  def fill[A](_taille: Int)(value: A): Hexa[A] =
+    new Hexa[A](_taille, Vector.fill(_taille * _taille)(value))
 
-  def tabulate[A](_size: Int)(f: Position => A): Hexa[A] =
-    new Hexa[A](_size, Vector.tabulate(_size * _size) { i =>
-      f(Position(haut = i / _size, bas = i % _size))
+  def tabulate[A](_taille: Int)(f: Position => A): Hexa[A] =
+    new Hexa[A](_taille, Vector.tabulate(_taille * _taille) { i =>
+      f(Position(haut = i / _taille, bas = i % _taille))
     })
 }

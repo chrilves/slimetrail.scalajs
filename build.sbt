@@ -11,7 +11,6 @@ lazy val warts =
     Wart.MutableDataStructures
   )
 
-
 val optionsScalacDePrudence =
   Seq(
     "-deprecation",
@@ -45,8 +44,7 @@ val optionsScalacDePrudence =
     "-Ywarn-value-discard"
   )
 
-
-val settingsGlobaux: Seq[sbt.Def.SettingsDefinition] =
+lazy val settingsGlobaux: Seq[sbt.Def.SettingsDefinition] =
   Seq(
     inThisBuild(
       List(
@@ -60,9 +58,8 @@ val settingsGlobaux: Seq[sbt.Def.SettingsDefinition] =
     wartremoverErrors in (Compile, compile) := warts,
     wartremoverWarnings in (Compile, console) := warts,
     addCompilerPlugin("io.tryp" % "splain" % "0.3.1" cross CrossVersion.patch),
-    scalafmtOnCompile := true,    
+    scalafmtOnCompile := true
   )
-
 
 /* Diverses choses qui peuvent être utiles
  * comme des algorithmes de diff
@@ -71,7 +68,7 @@ lazy val outils =
   crossProject(JSPlatform, JVMPlatform)
     .crossType(CrossType.Pure)
     .in(file("outils"))
-    .settings(settingsGlobaux :_*)
+    .settings(settingsGlobaux: _*)
     .settings(name := "outils")
 
 lazy val outilsJS = outils.js
@@ -84,7 +81,7 @@ lazy val slimetrail =
     .crossType(CrossType.Pure)
     .in(file("slimetrail"))
     .settings(settingsGlobaux: _*)
-    .settings(name := "slimetrail")    
+    .settings(name := "slimetrail")
     .dependsOn(outils)
 
 lazy val slimetrailJS = slimetrail.js
@@ -94,7 +91,7 @@ lazy val slimetrailJVM = slimetrail.jvm
 lazy val root =
   project
     .in(file("web"))
-    .settings(settingsGlobaux:_*)
+    .settings(settingsGlobaux: _*)
     .settings(
       name := "web",
       libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.5",

@@ -111,24 +111,30 @@ object syntax {
 
   type FaitReaction[A] = js.Function1[_ <: Event, A] => Parametre[A]
 
-  def on[A](`type`: String): FaitReaction[A] =
-    (f: js.Function1[_ <: Event, A]) => Parametre.Reac(Reaction(`type`, f))
+  @inline
+  def on[T <: Event, A](`type`: String)(f: js.Function1[T, A]): Parametre[A] =
+    Parametre.Reac(Reaction(`type`, (e: T) => {
+      e.stopPropagation()
+      f(e)
+    }))
 
+  @inline
   def on0[A](`type`: String)(msg: => A): Parametre[A] =
-    Parametre.Reac(Reaction(`type`, (_: Event) => msg))
+    on[Event, A](`type`) { _ =>
+      msg
+    }
 
-  def onsubmit[A](msg: => A): Parametre[A] = on0("submit")(msg)
-  def onclick[A](msg: => A): Parametre[A] = on0("click")(msg)
+  @inline def onsubmit[A](msg: => A): Parametre[A] = on0("submit")(msg)
+  @inline def onclick[A](msg: => A): Parametre[A] = on0("click")(msg)
 
+  @inline
   def onInputElement[A](ext: HTMLInputElement => A): Parametre[A] =
-    Parametre.Reac(
-      Reaction("input",
-               (e: Event) =>
-                 e.target match {
-                   case input: HTMLInputElement =>
-                     ext(input)
-               })
-    )
+    on[Event, A]("input") { (e: Event) =>
+      e.target match {
+        case input: HTMLInputElement =>
+          ext(input)
+      }
+    }
 
   @inline
   def oninput[A](reaction: String => A): Parametre[A] =

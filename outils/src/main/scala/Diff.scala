@@ -1,5 +1,11 @@
 package outils
 
+/** Est utilisé par les algorithmes de différentiation
+  * de sequences implémentés dans [[Diff]].
+  *
+  * Représente une différence (ou non) entre deux séquences.
+  * Regardez [[Diff.apply]] et [[Diff.myers]] pour plus de détails.
+  */
 sealed abstract class Diff[+A, +B]
 
 object Diff {
@@ -18,6 +24,7 @@ object Diff {
     }
   }
 
+  /** Affiche une liste de diff sous forme compacte */
   def logDiffs[A, B](l: List[Diff[A, B]]): String =
     l.map {
         case Ajout(b)    => s"+$b"
@@ -27,16 +34,41 @@ object Diff {
       }
       .mkString(",")
 
+  /** Dans [[Diff.apply]] et [[Diff.myers]], indique une valeur à ajouter
+    * à la première séquence pour se "rapprocher" de la seconde
+    */
   final case class Ajout[+B](valeur: B) extends Diff[Nothing, B]
+
+  /** Dans [[Diff.apply]] et [[Diff.myers]], indique une valeur à supprimer
+    * de la première séquence pour se "rapprocher" de la seconde
+    */
   final case class Suppr[+A](valeur: A) extends Diff[A, Nothing]
+
+  /** Dans [[Diff.apply]] et [[Diff.myers]], indique une valeur commune
+    * à la première et deuxième séquence.
+    */
   final case class Ident[+A, +B](de: A, vers: B) extends Diff[A, B]
+
+  /** Dans [[Diff.apply]] et [[Diff.myers]], indique une valeur A
+    * de la première séquence à remplacer par la valeur B dans la
+    * deuxième séquence pour réduire la distance entre les deux.
+    */
   final case class Rempl[+A, +B](de: A, vers: B) extends Diff[A, B]
 
+  /** Calcule la liste des différences entre les séquences {{a1}} et {{a2}}
+    * en comparant les élements via la function {{eq}}
+    *
+    * Example:
+    *  {{Diff((x:Char, y:Char) => x === y)("CHIEN".toList, "NICHE".toList)}}
+    *
+    * pour calculer ce que supprimer, garder, remplacer ou ajouter de/dans
+    * "CHIEN" pour obtenir "NICHE"
+    */
   @SuppressWarnings(
     Array("org.wartremover.warts.Var", "org.wartremover.warts.TraversableOps"))
-  def apply[A, B](a1: List[A],
-                  a2: List[B],
-                  eq: (A, B) => Boolean): (Int, List[Diff[A, B]]) = {
+  def apply[A, B](eq: (A, B) => Boolean)(
+      a1: List[A],
+      a2: List[B]): (Int, List[Diff[A, B]]) = {
     type Q = (Int, List[Diff[A, B]])
     type T = Array[Q]
 
@@ -88,6 +120,15 @@ object Diff {
     auxI(_l0, _l1, a1.zipWithIndex)
   }
 
+  /** Calcule la liste des différences entre les séquences {{a1}} et {{a2}}
+    * en comparant les élements via la function {{eq}}
+    *
+    * Example:
+    *  {{Diff.myers((x:Char, y:Char) => x === y)("CHIEN".toList, "NICHE".toList)}}
+    *
+    * pour calculer ce que supprimer, garder, remplacer ou ajouter de/dans
+    * "CHIEN" pour obtenir "NICHE"
+    */
   def myers[A, B](eq: (A, B) => Boolean)(
       l: Array[A],
       r: Array[B]): (Int, List[Diff[A, B]]) = {
@@ -175,6 +216,7 @@ object Diff {
     }
   }
 
+  /** Spécialisation de [[Diff.myers]] aux chaines de caractères avec égalité sur les [[Char]] */
   def myersChaines(s1: String, s2: String): (Int, List[Diff[Char, Char]]) =
     myers((x: Char, y: Char) => x === y)(s1.toArray, s2.toArray)
 }

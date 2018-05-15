@@ -6,11 +6,7 @@ import outils._
 
 final class AppliWebSlimetrail(taille: Int)
     extends AppSlimetrail(taille)
-    with ApplicationElm {
-  private val debug: Boolean = true
-
-  @inline private def log(s: => String): Unit =
-    if (debug) println(s)
+    with ApplicationWebElm {
 
   def vue(m: Partie): Html[Msg] = {
     import html.syntax._

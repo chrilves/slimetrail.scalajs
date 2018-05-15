@@ -2,22 +2,10 @@ package slimetrail.web
 
 import org.scalajs.dom.raw._
 import slimetrail.web.html._
+import slimetrail._
 
-trait ApplicationElm { self =>
-  private val debug = false
-
-  @inline
-  private def log(s: String): Unit = {
-    if (debug) println(s)
-    ()
-  }
-
-  type Model
-  val modelInitial: Model
+trait ApplicationWebElm extends ApplicationElm { self =>
   def vue(model: Model): slimetrail.web.html.Html[Msg]
-
-  type Msg
-  def miseAJour(message: Msg, model: Model): Model
 
   @SuppressWarnings(Array("org.wartremover.warts.Var"))
   final def executer(noeudInitial: Node, useDifference: Boolean): Unit = {

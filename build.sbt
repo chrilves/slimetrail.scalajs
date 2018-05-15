@@ -88,14 +88,22 @@ lazy val slimetrailJS = slimetrail.js
 lazy val slimetrailJVM = slimetrail.jvm
 
 // Interface web
-lazy val root =
+lazy val web =
   project
     .in(file("web"))
+    .enablePlugins(ScalaJSPlugin)
     .settings(settingsGlobaux: _*)
     .settings(
-      name := "web",
+      name := "slimetrail-web",
       libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.5",
       scalaJSUseMainModuleInitializer := true
     )
-    .enablePlugins(ScalaJSPlugin)
     .dependsOn(slimetrailJS)
+
+// Interface texte
+lazy val texte =
+  project
+    .in(file("texte"))
+    .settings(settingsGlobaux: _*)
+    .settings(name := "slimetrail-texte")
+    .dependsOn(slimetrailJVM)

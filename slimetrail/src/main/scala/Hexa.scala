@@ -3,6 +3,12 @@ package slimetrail
 import outils._
 import scala.annotation._
 
+/** Implémentation d'une grille carrée hexagonale immutable.
+  * Les positions {{Position(h,b)}} définies pour une grille de taille {{t}} sont:
+  *
+  * `0 <= h < t`
+  * `0 <= b < t`
+  */
 final class Hexa[+A](val taille: Int, cells: Vector[A]) {
   private val debug: Boolean = false
   @inline private def log(s: => String): Unit =
@@ -17,9 +23,13 @@ final class Hexa[+A](val taille: Int, cells: Vector[A]) {
   private def position(i: Int): Position =
     Position(haut = i / taille, bas = i % taille)
 
+  /** Récupère la valeur stockée dans une position */
   def get(p: Position): Option[A] =
     offset(p).flatMap(cells.lift(_))
 
+  /** Renvoie une grille ou la position {{position}} vaut {{valeur}}
+    * (si cette position est dans les limites de la grille, sinon renvoie la grille d'origine)
+    */
   def set[B >: A](position: Position, valeur: B): Hexa[B] =
     offset(position) match {
       case Some(i) =>
@@ -47,6 +57,7 @@ final class Hexa[+A](val taille: Int, cells: Vector[A]) {
        }.toVector.mkString("\n")}
     |}""".stripMargin
 
+  /** Calcule si les deux positions peuvent être reliés par des cases respectant le prédicat */
   def connecteesPar(
       predicat: (Position, A) => Boolean,
       origine: Position,
@@ -86,6 +97,7 @@ final class Hexa[+A](val taille: Int, cells: Vector[A]) {
     rec(Set(origine), List(origine))
   }
 
+  /** Calcule les positions atteignables depuis la position donnée en respectant le prédicat*/
   def atteignableDepuis(
       origine: Position,
       predicat: (Position, A) => Boolean
@@ -122,9 +134,12 @@ final class Hexa[+A](val taille: Int, cells: Vector[A]) {
 }
 
 object Hexa {
+
+  /** Crée une grille hexagonale carrée immutable de taille {{taille}} remplie de {{value}}*/
   def fill[A](_taille: Int)(value: A): Hexa[A] =
     new Hexa[A](_taille, Vector.fill(_taille * _taille)(value))
 
+  /** Crée une grille hexagonale carrée immutable de taille {{taille}} remplie par {{f}}*/
   def tabulate[A](_taille: Int)(f: Position => A): Hexa[A] =
     new Hexa[A](_taille, Vector.tabulate(_taille * _taille) { i =>
       f(Position(haut = i / _taille, bas = i % _taille))

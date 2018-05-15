@@ -16,6 +16,7 @@ sealed abstract class Joueur {
       case Second  => Premier
     }
 }
+
 object Joueur {
   case object Premier extends Joueur
   case object Second extends Joueur
@@ -40,18 +41,28 @@ final case class Coup(position: Position)
 /** Une case de la grille */
 final case class Case(visitee: Boolean)
 
+/** Réprésente l'état d'une partie de Slimetrail */
 sealed abstract class Partie {
   val grille: Hexa[Case]
   val positionActuelle: Position
   val tour: Tour
+
+  /** La séquence des coups passés. L'indice 0 est le premier coup. */
   val historique: Vector[Coup]
 
   final lazy val taille: Int = grille.taille
+
+  /** La position que le premier joueur doit atteindre */
   final lazy val objectifPremierJoueur: Position = Position(taille - 1, 0)
+
+  /** La position que le second joueur doit atteindre */
   final lazy val objectifSecondJoueur: Position = Position(0, taille - 1)
   final lazy val positionDeDepart: Position = Partie.positionDeDepart(taille)
 
+  /** La largeur de la grille avec des hexagones de rayon 1*/
   final lazy val largeur: Double = 3 * taille.toDouble - 1
+
+  /** La moitié de la hauteur de la grille avec des hexagones de rayon 1*/
   final lazy val demiHauteur: Double = taille * math.sin(math.Pi * 60 / 180)
 
   final def objectif(j: Joueur): Position =
@@ -60,6 +71,7 @@ sealed abstract class Partie {
       case Joueur.Second  => objectifSecondJoueur
     }
 
+  /** Indique si la position est une de victoire pour l'un des joueur */
   final def positionGagnante(p: Position): Option[Joueur] =
     p match {
       case `objectifPremierJoueur` => Some(Joueur.Premier)
@@ -67,12 +79,14 @@ sealed abstract class Partie {
       case _                       => None
     }
 
+  /** La partie est en cours ou non*/
   final def enCours: Boolean =
     tour match {
       case Tour.GagnePar(_) => false
       case Tour.Au(_)       => true
     }
 
+  /** Seuls certains coups sont possibles suivant l'état de la partie*/
   final def coupsValides: Map[Position, Option[Joueur]] = {
     import Joueur._
 
@@ -107,6 +121,9 @@ sealed abstract class Partie {
     m.toMap
   }
 
+  /** Joue un coup. Si ce dernier est valide, renvoie le nouvel état de la partie.
+    * Sinon, renvoie {{None}}.
+    */
   final def jouerUnCoup(c: Coup, p: Partie): Option[Partie] =
     p.tour match {
       case Tour.GagnePar(_) =>
@@ -153,6 +170,7 @@ object Partie {
     Position(mid, max - mid)
   }
 
+  /** Etat initial d'une partie de taille donnée */
   def debut(taille_ : Int): Partie = {
     val lataille = math.max(taille_, 3)
 
@@ -164,9 +182,17 @@ object Partie {
     }
   }
 
+  /** Le vecteur de translation pour passer d'un hexagone de la grille de
+    * Position(X,Y) à Position(X,Y+1)
+    */
   val haut: Point = Point.polarDeg(math.sqrt(3), 30)
+
+  /** Le vecteur de translation pour passer d'un hexagone de la grille de
+    * Position(X,Y) à Position(X+1,Y)
+    */
   val bas: Point = Point.polarDeg(math.sqrt(3), -30)
 
+  /** Donne le point correspondant au centre de l'hexagone à la position donnée.*/
   def coordonnees(pos: Position): Point =
     (haut ** pos.haut.toDouble) + (bas ** pos.bas.toDouble)
 }

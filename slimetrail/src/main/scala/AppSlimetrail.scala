@@ -19,14 +19,14 @@ abstract class AppSlimetrail(taille: Int) extends ApplicationElm {
   final case object NouvellePartie extends Msg
 
   /** L'état initial d'une partie (donc de l'application) */
-  final val modelInitial: Partie = Partie.debut(taille)
+  final lazy val modelInitial: Partie = Partie.debut(taille)
 
   /** Avancement de l'état d'une partie (donc de l'application) en réponse
     * aux évènements possibles: nouveau coup ou nouvelle partie.
     */
   final def miseAJour(msg: Msg, model: Partie): Partie =
     msg match {
-      case UnCoup(c)      => model.jouerUnCoup(c, model).getOrElse(model)
+      case UnCoup(c)      => model.jouerUnCoup(c).getOrElse(model)
       case NouvellePartie => Partie.debut(taille)
     }
 }

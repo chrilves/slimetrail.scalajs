@@ -42,7 +42,7 @@ final case class Coup(position: Position)
 final case class Case(visitee: Boolean)
 
 /** Réprésente l'état d'une partie de Slimetrail */
-sealed abstract class Partie {
+sealed abstract class Partie { self =>
   val grille: Hexa[Case]
   val positionActuelle: Position
   val tour: Tour
@@ -124,20 +124,20 @@ sealed abstract class Partie {
   /** Joue un coup. Si ce dernier est valide, renvoie le nouvel état de la partie.
     * Sinon, renvoie {{None}}.
     */
-  final def jouerUnCoup(c: Coup, p: Partie): Option[Partie] =
-    p.tour match {
+  final def jouerUnCoup(c: Coup): Option[Partie] =
+    tour match {
       case Tour.GagnePar(_) =>
         None
 
       case Tour.Au(j) =>
-        val nouvelleGrille = p.grille.set(p.positionActuelle, Case(true))
+        val nouvelleGrille = grille.set(positionActuelle, Case(true))
 
         def nouvellePartie(t: Tour): Partie =
           new Partie {
             val grille: Hexa[Case] = nouvelleGrille
             val positionActuelle: Position = c.position
             val tour: Tour = t
-            val historique: Vector[Coup] = p.historique.:+(c)
+            val historique: Vector[Coup] = self.historique.:+(c)
           }
 
         coupsValides.get(c.position).map { _ =>

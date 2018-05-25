@@ -8,4 +8,4 @@ addSbtPlugin("com.geirsson" % "sbt-scalafmt" % "1.5.1")
 
 // ScalaJS
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "0.4.0")
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.22")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.23")

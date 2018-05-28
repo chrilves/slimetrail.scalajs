@@ -8,7 +8,7 @@ trait ApplicationWebElm extends ApplicationElm { self =>
   def vue(model: Model): slimetrail.web.html.Html[Msg]
 
   @SuppressWarnings(Array("org.wartremover.warts.Var"))
-  final def executer(noeudInitial: Node, useDifference: Boolean): Unit = {
+  final def executer(noeudInitial: Node): Unit = {
     import Html._
 
     final case class Etat(noeud: Node, vue: Html[Unit], model: Model)
@@ -27,16 +27,11 @@ trait ApplicationWebElm extends ApplicationElm { self =>
       val ancienNoeud: Node = etat.noeud
       val parent: Node = ancienNoeud.parentNode
 
-      val nouveauNoeud: Node =
-        if (useDifference)
-          Rendu.difference(parent,
-                           Rendu.Entree(etat.vue, etat.noeud),
-                           nouvelleVue)
-        else {
-          val n = Rendu.dessiner(nouvelleVue)
-          parent.replaceChild(n, ancienNoeud)
-          n
-        }
+      val nouveauNoeud: Node = {
+        val n = nouvelleVue.dessiner
+        parent.replaceChild(n, ancienNoeud)
+        n
+      }
 
       etat = Etat(nouveauNoeud, nouvelleVue, nouveauModel)
     }

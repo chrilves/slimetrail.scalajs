@@ -1,6 +1,7 @@
 package slimetrail.web.html
 
 import org.scalajs.dom.raw._
+import org.scalajs.dom._
 import scalajs.js
 
 object Attribut {
@@ -13,8 +14,6 @@ final case class Reaction[+A](`type`: String,
                               reaction: js.Function1[_ <: Event, A]) {
   def map[B](f: A => B): Reaction[B] =
     Reaction(`type`, reaction.andThen(f))
-
-  override def toString = s"""on${`type`}="""""
 }
 
 sealed abstract class Namespace(val uri: String)
@@ -25,6 +24,34 @@ object Namespace {
 
 sealed abstract class Html[+A] {
   def map[B](f: A => B): Html[B]
+
+  import Html._
+
+  @SuppressWarnings(Array("org.wartremover.warts.Null"))
+  final def dessiner: Node =
+    this match {
+      case Texte(s) =>
+        document.createTextNode(s)
+
+      case Noeud(espace, balise, attributs, reactions, enfants) =>
+        val b: Element = document.createElementNS(espace.uri, balise)
+
+        attributs.foreach {
+          case (Attribut.Clef(clef, ns), Attribut.Valeur(valeur)) =>
+            b.setAttributeNS(ns.map(_.valeur).getOrElse(null), clef, valeur)
+        }
+
+        reactions.foreach {
+          case Reaction(t, r) =>
+            b.addEventListener(t, r, false)
+        }
+
+        enfants.foreach { enfant =>
+          b.appendChild(enfant.dessiner)
+        }
+
+        b
+    }
 }
 
 object Html {
@@ -49,15 +76,5 @@ object Html {
         reactions.map(_.map(f)),
         enfants.map(_.map(f))
       )
-
-    override def toString = {
-      val attrs =
-        attributs.map {
-          case (Attribut.Clef(c, ns), Attribut.Valeur(v)) =>
-            val sns = ns.map(x => s"[$x]").getOrElse("")
-            s""" $sns$c="$v""""
-        }.mkString
-      s"<$balise xmlns:$espaceDeNom$attrs/>"
-    }
   }
 }

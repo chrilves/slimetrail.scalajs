@@ -11,6 +11,6 @@ object Main {
   def main(args: Array[String]): Unit =
     auChargement {
       new AppliWebSlimetrail(10)
-        .executer(document.getElementById("espaceScalaJS"), true)
+        .executer(document.getElementById("espaceScalaJS"))
     }
 }

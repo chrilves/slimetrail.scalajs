@@ -4,9 +4,15 @@ import org.scalajs.dom.raw.{Event, HTMLInputElement}
 import Html._
 import scala.scalajs.js
 
+/** Petit DSL pour écrire un arbre HTML/SVG comme si c'était vraiment du HTML/SVG */
 @SuppressWarnings(Array("org.wartremover.warts.DefaultArguments"))
 object syntax {
 
+  /** Un parametre est:
+    *  - soit un attribut, qui sera attaché au noeud correpondant.
+    *  - soit une réaction, qui sera ajouté aux event listener du noeud correpondant.
+    *  - soit Nop qui n'a aucun effet sur le HTML/SVG produit, mais est pratique sur le plan syntaxique.
+    */
   sealed abstract class Parametre[+A]
   object Parametre {
     final case class Attr(attr: (Attribut.Clef, Attribut.Valeur))
@@ -15,10 +21,10 @@ object syntax {
     final case object Nop extends Parametre[Nothing]
   }
 
-  type FaitNoeud[A] = (Parametre[A]*) => (Html[A]*) => Noeud[A]
-
+  /** De quoi créer un noeud */
   def noeud_[A](espaceDeNom: Namespace, balise: String)(ar: Seq[Parametre[A]])(
       e: Seq[Html[A]]): Noeud[A] = {
+
     val attributs: Map[Attribut.Clef, Attribut.Valeur] =
       ar.flatMap {
         case Parametre.Attr(cd) => List(cd)
@@ -33,6 +39,10 @@ object syntax {
 
     Noeud(espaceDeNom, balise, attributs, reactions, e)
   }
+
+  /** Type des constructeurs de noeuds */
+  type FaitNoeud[A] = (Parametre[A]*) => (Html[A]*) => Noeud[A]
+
   @inline
   def noeud[A](balise: String,
                espaceDeNom: Namespace = Namespace.HTML): FaitNoeud[A] =
@@ -64,6 +74,7 @@ object syntax {
 
   val nop: Parametre[Nothing] = Parametre.Nop
 
+  /** Type des constructeurs d'attributs */
   type FaitAttr = String => Parametre[Nothing]
 
   @inline
@@ -109,6 +120,7 @@ object syntax {
     else
       Parametre.Nop
 
+  /** Type des constructeurs de réaction */
   type FaitReaction[A] = js.Function1[_ <: Event, A] => Parametre[A]
 
   @inline

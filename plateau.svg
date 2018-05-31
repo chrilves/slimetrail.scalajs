@@ -1,0 +1,1056 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   viewBox="-1 -8.660254037844386 29 17.32050807568877"
+   style="stroke-width: 0.01;"
+   id="svg4936"
+   sodipodi:docname="plateau.svg"
+   inkscape:version="0.92.2 2405546, 2018-03-11">
+  <metadata
+     id="metadata4942">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4940">
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible;"
+       id="marker6512"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path6510" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible;"
+       id="marker5824"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path5822" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="marker5480"
+       style="overflow:visible;"
+       inkscape:isstock="true">
+      <path
+         id="path5478"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="marker5310"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path5308"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         transform="scale(0.8) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         id="path4967"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4964"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         transform="scale(0.8) translate(12.5,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1026"
+     id="namedview4938"
+     showgrid="false"
+     inkscape:zoom="54.501863"
+     inkscape:cx="12.191887"
+     inkscape:cy="9.7782305"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4936" />
+  <g
+     id="plateau"
+     transform="scale(1,-1)">
+    <symbol
+       width="2"
+       x="-1"
+       viewBox="-1 -1 2 2"
+       id="hexagon"
+       height="2"
+       y="-1">
+      <polygon
+         style="stroke:black;"
+         points="1,0 0.5000000000000001,0.8660254037844386 -0.4999999999999998,0.8660254037844387 -1,1.2246467991473532e-16 -0.5000000000000004,-0.8660254037844384 0.5000000000000001,-0.8660254037844386"
+         id="polygon4727"
+         fill="none" />
+    </symbol>
+    <g
+       id="hexagones">
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="0"
+         class="case-vide"
+         height="2"
+         y="0"
+         id="use4730" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="1.5"
+         class="case-vide"
+         height="2"
+         y="-0.8660254037844385"
+         id="use4732" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="3"
+         class="case-vide"
+         height="2"
+         y="-1.732050807568877"
+         id="use4734" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="4.5"
+         class="case-vide"
+         height="2"
+         y="-2.5980762113533156"
+         id="use4736" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="6"
+         class="case-vide"
+         height="2"
+         y="-3.464101615137754"
+         id="use4738" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="7.5"
+         class="case-vide"
+         height="2"
+         y="-4.330127018922193"
+         id="use4740" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="9"
+         class="case-vide"
+         height="2"
+         y="-5.196152422706631"
+         id="use4742" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="10.5"
+         class="case-vide"
+         height="2"
+         y="-6.0621778264910695"
+         id="use4744" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="12"
+         class="case-vide"
+         height="2"
+         y="-6.928203230275508"
+         id="use4746" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="13.5"
+         class="objectif-second-joueur"
+         height="2"
+         y="-7.794228634059946"
+         id="use4748" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="1.5"
+         class="case-vide"
+         height="2"
+         y="0.8660254037844385"
+         id="use4750" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="3"
+         class="case-vide"
+         height="2"
+         y="0"
+         id="use4752" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="4.5"
+         class="case-vide"
+         height="2"
+         y="-0.8660254037844385"
+         id="use4754" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="6"
+         class="case-vide"
+         height="2"
+         y="-1.7320508075688772"
+         id="use4756" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="7.5"
+         class="case-vide"
+         height="2"
+         y="-2.5980762113533156"
+         id="use4758" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="9"
+         class="case-vide"
+         height="2"
+         y="-3.4641016151377544"
+         id="use4760" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="10.5"
+         class="case-vide"
+         height="2"
+         y="-4.330127018922193"
+         id="use4762" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="12"
+         class="case-vide"
+         height="2"
+         y="-5.196152422706631"
+         id="use4764" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="13.5"
+         class="case-vide"
+         height="2"
+         y="-6.0621778264910695"
+         id="use4766" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="15"
+         class="case-vide"
+         height="2"
+         y="-6.928203230275508"
+         id="use4768" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="3"
+         class="case-vide"
+         height="2"
+         y="1.732050807568877"
+         id="use4770" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="4.5"
+         class="case-vide"
+         height="2"
+         y="0.8660254037844385"
+         id="use4772" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="6"
+         class="case-vide"
+         height="2"
+         y="0"
+         id="use4774" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="7.5"
+         class="case-vide"
+         height="2"
+         y="-0.8660254037844386"
+         id="use4776" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="9"
+         class="case-vide"
+         height="2"
+         y="-1.732050807568877"
+         id="use4778" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="10.5"
+         class="case-vide"
+         height="2"
+         y="-2.598076211353316"
+         id="use4780" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="12"
+         class="case-vide"
+         height="2"
+         y="-3.4641016151377544"
+         id="use4782" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="13.5"
+         class="case-vide"
+         height="2"
+         y="-4.330127018922193"
+         id="use4784" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="15"
+         class="case-vide"
+         height="2"
+         y="-5.196152422706631"
+         id="use4786" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="16.5"
+         class="case-vide"
+         height="2"
+         y="-6.0621778264910695"
+         id="use4788" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="4.5"
+         class="case-vide"
+         height="2"
+         y="2.5980762113533156"
+         id="use4790" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="6"
+         class="case-vide"
+         height="2"
+         y="1.7320508075688772"
+         id="use4792" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="7.5"
+         class="case-vide"
+         height="2"
+         y="0.8660254037844386"
+         id="use4794" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="9"
+         class="case-vide"
+         height="2"
+         y="0"
+         id="use4796" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="10.5"
+         class="case-vide"
+         height="2"
+         y="-0.8660254037844384"
+         id="use4798" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="12"
+         class="coup-valide-premier-joueur"
+         height="2"
+         y="-1.7320508075688772"
+         id="use4800" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="13.5"
+         class="coup-valide-premier-joueur"
+         height="2"
+         y="-2.5980762113533156"
+         id="use4802" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="15"
+         class="case-vide"
+         height="2"
+         y="-3.464101615137754"
+         id="use4804" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="16.5"
+         class="case-vide"
+         height="2"
+         y="-4.330127018922193"
+         id="use4806" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="18"
+         class="case-vide"
+         height="2"
+         y="-5.19615242270663"
+         id="use4808" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="6"
+         class="case-vide"
+         height="2"
+         y="3.464101615137754"
+         id="use4810" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="7.5"
+         class="case-vide"
+         height="2"
+         y="2.5980762113533156"
+         id="use4812" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="9"
+         class="case-vide"
+         height="2"
+         y="1.732050807568877"
+         id="use4814" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="10.5"
+         class="case-vide"
+         height="2"
+         y="0.8660254037844384"
+         id="use4816" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="12"
+         class="coup-valide-premier-joueur"
+         height="2"
+         y="0"
+         id="use4818" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="13.5"
+         class="position-actuelle"
+         height="2"
+         y="-0.8660254037844388"
+         id="use4820" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="15"
+         class="coup-valide-premier-joueur"
+         height="2"
+         y="-1.7320508075688772"
+         id="use4822" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="16.5"
+         class="case-vide"
+         height="2"
+         y="-2.5980762113533156"
+         id="use4824" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="18"
+         class="case-vide"
+         height="2"
+         y="-3.464101615137754"
+         id="use4826" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="19.5"
+         class="case-vide"
+         height="2"
+         y="-4.330127018922193"
+         id="use4828" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="7.5"
+         class="case-vide"
+         height="2"
+         y="4.330127018922193"
+         id="use4830" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="9"
+         class="case-vide"
+         height="2"
+         y="3.4641016151377544"
+         id="use4832" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="10.5"
+         class="case-vide"
+         height="2"
+         y="2.598076211353316"
+         id="use4834" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="12"
+         class="case-vide"
+         height="2"
+         y="1.7320508075688772"
+         id="use4836" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="13.5"
+         class="coup-valide-premier-joueur"
+         height="2"
+         y="0.8660254037844388"
+         id="use4838" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="15"
+         class="coup-valide-premier-joueur"
+         height="2"
+         y="0"
+         id="use4840" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="16.5"
+         class="case-vide"
+         height="2"
+         y="-0.8660254037844384"
+         id="use4842" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="18"
+         class="case-vide"
+         height="2"
+         y="-1.7320508075688767"
+         id="use4844" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="19.5"
+         class="case-vide"
+         height="2"
+         y="-2.598076211353315"
+         id="use4846" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="21"
+         class="case-vide"
+         height="2"
+         y="-3.4641016151377535"
+         id="use4848" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="9"
+         class="case-vide"
+         height="2"
+         y="5.196152422706631"
+         id="use4850" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="10.5"
+         class="case-vide"
+         height="2"
+         y="4.330127018922193"
+         id="use4852" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="12"
+         class="case-vide"
+         height="2"
+         y="3.4641016151377544"
+         id="use4854" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="13.5"
+         class="case-vide"
+         height="2"
+         y="2.5980762113533156"
+         id="use4856" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="15"
+         class="case-vide"
+         height="2"
+         y="1.7320508075688772"
+         id="use4858" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="16.5"
+         class="case-vide"
+         height="2"
+         y="0.8660254037844384"
+         id="use4860" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="18"
+         class="case-vide"
+         height="2"
+         y="0"
+         id="use4862" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="19.5"
+         class="case-vide"
+         height="2"
+         y="-0.8660254037844384"
+         id="use4864" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="21"
+         class="case-vide"
+         height="2"
+         y="-1.7320508075688767"
+         id="use4866" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="22.5"
+         class="case-vide"
+         height="2"
+         y="-2.598076211353315"
+         id="use4868" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="10.5"
+         class="case-vide"
+         height="2"
+         y="6.0621778264910695"
+         id="use4870" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="12"
+         class="case-vide"
+         height="2"
+         y="5.196152422706631"
+         id="use4872" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="13.5"
+         class="case-vide"
+         height="2"
+         y="4.330127018922193"
+         id="use4874" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="15"
+         class="case-vide"
+         height="2"
+         y="3.464101615137754"
+         id="use4876" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="16.5"
+         class="case-vide"
+         height="2"
+         y="2.5980762113533156"
+         id="use4878" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="18"
+         class="case-vide"
+         height="2"
+         y="1.7320508075688767"
+         id="use4880" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="19.5"
+         class="case-vide"
+         height="2"
+         y="0.8660254037844384"
+         id="use4882" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="21"
+         class="case-vide"
+         height="2"
+         y="0"
+         id="use4884" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="22.5"
+         class="case-vide"
+         height="2"
+         y="-0.8660254037844384"
+         id="use4886" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="24"
+         class="case-vide"
+         height="2"
+         y="-1.7320508075688767"
+         id="use4888" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="12"
+         class="case-vide"
+         height="2"
+         y="6.928203230275508"
+         id="use4890" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="13.5"
+         class="case-vide"
+         height="2"
+         y="6.0621778264910695"
+         id="use4892" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="15"
+         class="case-vide"
+         height="2"
+         y="5.196152422706631"
+         id="use4894" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="16.5"
+         class="case-vide"
+         height="2"
+         y="4.330127018922193"
+         id="use4896" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="18"
+         class="case-vide"
+         height="2"
+         y="3.464101615137754"
+         id="use4898" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="19.5"
+         class="case-vide"
+         height="2"
+         y="2.598076211353315"
+         id="use4900" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="21"
+         class="case-vide"
+         height="2"
+         y="1.7320508075688767"
+         id="use4902" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="22.5"
+         class="case-vide"
+         height="2"
+         y="0.8660254037844384"
+         id="use4904" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="24"
+         class="case-vide"
+         height="2"
+         y="0"
+         id="use4906" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="25.5"
+         class="case-vide"
+         height="2"
+         y="-0.8660254037844384"
+         id="use4908" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="13.5"
+         class="objectif-premier-joueur"
+         height="2"
+         y="7.794228634059946"
+         id="use4910" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="15"
+         class="case-vide"
+         height="2"
+         y="6.928203230275508"
+         id="use4912" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="16.5"
+         class="case-vide"
+         height="2"
+         y="6.0621778264910695"
+         id="use4914" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="18"
+         class="case-vide"
+         height="2"
+         y="5.19615242270663"
+         id="use4916" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="19.5"
+         class="case-vide"
+         height="2"
+         y="4.330127018922193"
+         id="use4918" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="21"
+         class="case-vide"
+         height="2"
+         y="3.4641016151377535"
+         id="use4920" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="22.5"
+         class="case-vide"
+         height="2"
+         y="2.598076211353315"
+         id="use4922" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="24"
+         class="case-vide"
+         height="2"
+         y="1.7320508075688767"
+         id="use4924" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="25.5"
+         class="case-vide"
+         height="2"
+         y="0.8660254037844384"
+         id="use4926" />
+      <use
+         xlink:href="#hexagon"
+         width="2"
+         x="27"
+         class="case-vide"
+         height="2"
+         y="0"
+         id="use4928" />
+    </g>
+    <g
+       id="chemin" />
+  </g>
+  <g
+     id="regles">
+    <text
+       x="-0.0625"
+       y="-6.928203230275509"
+       style="font-size: 10%;"
+       class="titre"
+       id="text4933">Slimetrail</text>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:1.33333349px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+     x="0.48165199"
+     y="-0.81098145"
+     id="text4946"><tspan
+       sodipodi:role="line"
+       id="tspan4944"
+       x="0.48165199"
+       y="-0.81098145"
+       style="font-size:0.40000001px">(0,0)</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:0.40000001px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+     x="13.920092"
+     y="-8.6470518"
+     id="text4952"><tspan
+       sodipodi:role="line"
+       id="tspan4950"
+       x="13.920092"
+       y="-8.6470518">(9,0)</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:0.40000001px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+     x="13.971988"
+     y="6.869844"
+     id="text4956"><tspan
+       sodipodi:role="line"
+       id="tspan4954"
+       x="13.971988"
+       y="6.869844">(0,9)</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:0.40000001px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+     x="27.516836"
+     y="-0.96644759"
+     id="text4960"><tspan
+       sodipodi:role="line"
+       id="tspan4958"
+       x="27.516836"
+       y="-0.96644759">(9,9)</tspan></text>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.05;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend)"
+     d="M 0.19249446,2.674301 C 28.426129,2.6741079 28.426129,2.6741079 28.426129,2.6741079 v 0"
+     id="path4962"
+     inkscape:connector-curvature="0" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:0.40000001px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+     x="-6.9530153"
+     y="-13.468132"
+     id="text5262"
+     transform="rotate(89.262807)"><tspan
+       sodipodi:role="line"
+       id="tspan5260"
+       x="-6.9530153"
+       y="-13.468132">Partie.demiHauteur</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:0.40000001px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+     x="2.9440939"
+     y="3.1592822"
+     id="text5304"><tspan
+       sodipodi:role="line"
+       id="tspan5302"
+       x="2.9440939"
+       y="3.1592822">Partie.largeur</tspan></text>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.04540543px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#marker5310);marker-end:url(#marker5480)"
+     d="m 13.13883,-0.93668591 c 0.0056,-8.72446499 0.0056,-8.72446499 0.0056,-8.72446499"
+     id="path5306"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.04888136px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:"
+     d="m -0.4907886,-2.010496 0.44941695,1.04660624 v 0 0"
+     id="path6162"
+     inkscape:connector-curvature="0"
+     inkscape:transform-center-x="-0.018347997"
+     inkscape:transform-center-y="0.27521995" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:0.40000001px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+     x="-1.4953959"
+     y="-2.275151"
+     id="text6682"><tspan
+       sodipodi:role="line"
+       id="tspan6680"
+       x="-1.4953959"
+       y="-2.275151">(x=-1,y=0)</tspan></text>
+</svg>

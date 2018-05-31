@@ -1,6 +1,3 @@
-// shadow sbt-scalajs' crossProject and CrossType until Scala.js 1.0.0 is released
-import sbtcrossproject.{crossProject, CrossType}
-
 // voir http://www.wartremover.org/
 lazy val warts =
   Warts.allBut(
@@ -53,7 +50,6 @@ lazy val settingsGlobaux: Seq[sbt.Def.SettingsDefinition] =
         version := "0.1.0-SNAPSHOT"
       )),
     updateOptions := updateOptions.value.withCachedResolution(true),
-    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.5" % Test,
     scalacOptions ++= optionsScalacDePrudence,
     wartremoverErrors in (Compile, compile) := warts,
     wartremoverWarnings in (Compile, console) := warts,
@@ -65,40 +61,19 @@ lazy val settingsGlobaux: Seq[sbt.Def.SettingsDefinition] =
  * comme des algorithmes de diff
  */
 lazy val outils =
-  crossProject(JSPlatform, JVMPlatform)
-    .crossType(CrossType.Pure)
+  project
     .in(file("outils"))
     .settings(settingsGlobaux: _*)
     .settings(name := "outils")
 
-lazy val outilsJS = outils.js
-lazy val outilsJVM = outils.jvm
-
 /* Implémentation de la logique du jeu
  */
 lazy val slimetrail =
-  crossProject(JSPlatform, JVMPlatform)
-    .crossType(CrossType.Pure)
+  project
     .in(file("slimetrail"))
     .settings(settingsGlobaux: _*)
     .settings(name := "slimetrail")
     .dependsOn(outils)
-
-lazy val slimetrailJS = slimetrail.js
-lazy val slimetrailJVM = slimetrail.jvm
-
-// Interface web
-lazy val web =
-  project
-    .in(file("web"))
-    .enablePlugins(ScalaJSPlugin)
-    .settings(settingsGlobaux: _*)
-    .settings(
-      name := "slimetrail-web",
-      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.5",
-      scalaJSUseMainModuleInitializer := true
-    )
-    .dependsOn(slimetrailJS)
 
 // Interface texte
 lazy val texte =
@@ -106,4 +81,4 @@ lazy val texte =
     .in(file("texte"))
     .settings(settingsGlobaux: _*)
     .settings(name := "slimetrail-texte")
-    .dependsOn(slimetrailJVM)
+    .dependsOn(slimetrail)

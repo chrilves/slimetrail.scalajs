@@ -1,117 +1,114 @@
 package slimetrail
 
-import outils._
+import toolbox._
 
-/** C'est un jeu à deux joueurs.euses.
-  * Il se joue tour par tour. Il y a donc
-  * un.e premièr.e joueur.euse et un.e
-  * second.e jouer.euse.
+/** It's a turn-based two-player game.
+  * There is so a first and second player.
   */
-sealed abstract class Joueur {
-  import Joueur._
+sealed abstract class Player {
+  import Player._
 
-  def suivant: Joueur =
+  def next: Player =
     this match {
-      case Premier => Second
-      case Second  => Premier
+      case First  => Second
+      case Second => First
     }
 }
 
-object Joueur {
-  case object Premier extends Joueur
-  case object Second extends Joueur
+object Player {
+  case object First extends Player
+  case object Second extends Player
 }
 
-/** Représente l'état de la partie.
-  * Soit la partie à été gagnée par un.e
-  * des deux joeurs, soit c'est à un.e
-  * joueur.euse de jouer.
+/** Represents whether a game has been won
+  * and by who or is sill in play and
+  * whose turn it is.
   */
-sealed abstract class Tour { val joueur: Joueur }
-object Tour {
-  final case class Au(joueur: Joueur) extends Tour
-  final case class GagnePar(joueur: Joueur) extends Tour
+sealed abstract class Turn { val player: Player }
+object Turn {
+  final case class TurnTo(player: Player) extends Turn
+  final case class WonBy(player: Player) extends Turn
 }
 
-/** Représente un coup, fait par un.e jouer.euse
-  * sur une nouvelle position.
+/** Represents a move on a new position.
   */
-final case class Coup(position: Position)
+final case class Move(position: Position)
 
-/** Une case de la grille */
-final case class Case(visitee: Boolean)
+/** A cell of the grid */
+final case class Cell(visited: Boolean)
 
-/** Réprésente l'état d'une partie de Slimetrail */
-sealed abstract class Partie { self =>
-  val grille: Hexa[Case]
-  val positionActuelle: Position
-  val tour: Tour
+/** Represents the state of a game of Slimetrail */
+sealed abstract class GameState { self =>
+  val grid: Hexa[Cell]
+  val currentPosition: Position
+  val turn: Turn
 
-  /** La séquence des coups passés. L'indice 0 est le premier coup. */
-  val historique: Vector[Coup]
+  /** Past moves. Index 0 is the first move. */
+  val history: Vector[Move]
 
-  final lazy val taille: Int = grille.taille
+  final lazy val size: Int = grid.size
 
-  /** La position que le premier joueur doit atteindre */
-  final lazy val objectifPremierJoueur: Position = Position(taille - 1, 0)
+  /** The position the first player aims to reach */
+  final lazy val firstPlayerGoal: Position = Position(size - 1, 0)
 
-  /** La position que le second joueur doit atteindre */
-  final lazy val objectifSecondJoueur: Position = Position(0, taille - 1)
-  final lazy val positionDeDepart: Position = Partie.positionDeDepart(taille)
+  /** The position the second player aims to reach */
+  final lazy val secondPlayerGoal: Position = Position(0, size - 1)
 
-  /** La largeur de la grille avec des hexagones de rayon 1*/
-  final lazy val largeur: Double = 3 * taille.toDouble - 1
+  final lazy val startingPosition: Position = GameState.startingPosition(size)
 
-  /** La moitié de la hauteur de la grille avec des hexagones de rayon 1*/
-  final lazy val demiHauteur: Double = taille * math.sin(math.Pi * 60 / 180)
+  /** The width of the grid (with hexagons cells of radius 1)*/
+  final lazy val width: Double = 3 * size.toDouble - 1
 
-  final def objectif(j: Joueur): Position =
+  /** The half the of the heigh of the grid (with hexagons of radius 1)*/
+  final lazy val halfHeigh: Double = size * math.sin(math.Pi * 60 / 180)
+
+  final def goal(j: Player): Position =
     j match {
-      case Joueur.Premier => objectifPremierJoueur
-      case Joueur.Second  => objectifSecondJoueur
+      case Player.First  => firstPlayerGoal
+      case Player.Second => secondPlayerGoal
     }
 
-  /** Indique si la position est une de victoire pour l'un des joueur */
-  final def positionGagnante(p: Position): Option[Joueur] =
+  /** Tells if the position is a victory position of a player */
+  final def winningPosition(p: Position): Option[Player] =
     p match {
-      case `objectifPremierJoueur` => Some(Joueur.Premier)
-      case `objectifSecondJoueur`  => Some(Joueur.Second)
-      case _                       => None
+      case `firstPlayerGoal`  => Some(Player.First)
+      case `secondPlayerGoal` => Some(Player.Second)
+      case _                  => None
     }
 
-  /** La partie est en cours ou non*/
-  final def enCours: Boolean =
-    tour match {
-      case Tour.GagnePar(_) => false
-      case Tour.Au(_)       => true
+  /** Is the game still running ? */
+  final def onGoing: Boolean =
+    turn match {
+      case Turn.WonBy(_)  => false
+      case Turn.TurnTo(_) => true
     }
 
-  /** Seuls certains coups sont possibles suivant l'état de la partie*/
-  final def coupsValides: Map[Position, Option[Joueur]] = {
-    import Joueur._
+  /** Only some moves are legal depending in the game state */
+  final def allowedMoves: Map[Position, Option[Player]] = {
+    import Player._
 
-    def positionsAtteignables(j: Joueur): Set[Position] =
-      grille.atteignableDepuis(
-        objectif(j),
-        (p2: Position, c: Case) =>
-          !c.visitee && p2 =/= objectif(j.suivant) && p2 =/= positionActuelle
+    def reacheablePositions(j: Player): Set[Position] =
+      grid.reachableFrom(
+        goal(j),
+        (p2: Position, c: Cell) =>
+          !c.visited && p2 =/= goal(j.next) && p2 =/= currentPosition
       )
 
-    val positionsPremier = positionsAtteignables(Premier)
-    val positionsSecond = positionsAtteignables(Second)
+    val positionsFirst = reacheablePositions(First)
+    val positionsSecond = reacheablePositions(Second)
 
-    def atteignables(j: Joueur): Set[Position] =
+    def reachable(j: Player): Set[Position] =
       j match {
-        case Premier => positionsPremier
-        case Second  => positionsSecond
+        case First  => positionsFirst
+        case Second => positionsSecond
       }
 
-    val m: List[(Position, Option[Joueur])] =
+    val m: List[(Position, Option[Player])] =
       for {
-        p <- positionActuelle.voisinnes.toList if enCours
-        c <- grille.get(p).toList if !c.visitee
-        g <- List[Joueur](Premier, Second)
-          .filter(j => atteignables(j).contains(p)) match {
+        p <- currentPosition.neighbors.toList if onGoing
+        c <- grid.get(p).toList if !c.visited
+        g <- List[Player](First, Second)
+          .filter(j => reachable(j).contains(p)) match {
           case Nil     => Nil
           case List(j) => List(Some(j))
           case _       => List(None)
@@ -121,29 +118,29 @@ sealed abstract class Partie { self =>
     m.toMap
   }
 
-  /** Joue un coup. Si ce dernier est valide, renvoie le nouvel état de la partie.
-    * Sinon, renvoie {{None}}.
+  /** Play a move. If the last one is allowed, return the new game state.
+    * Otherwise return {{None}}.
     */
-  final def jouerUnCoup(c: Coup): Option[Partie] =
-    tour match {
-      case Tour.GagnePar(_) =>
+  final def playAMove(c: Move): Option[GameState] =
+    turn match {
+      case Turn.WonBy(_) =>
         None
 
-      case Tour.Au(j) =>
-        val nouvelleGrille = grille.set(positionActuelle, Case(true))
+      case Turn.TurnTo(j) =>
+        val newGrid = grid.set(currentPosition, Cell(true))
 
-        def nouvellePartie(t: Tour): Partie =
-          new Partie {
-            val grille: Hexa[Case] = nouvelleGrille
-            val positionActuelle: Position = c.position
-            val tour: Tour = t
-            val historique: Vector[Coup] = self.historique.:+(c)
+        def newGame(t: Turn): GameState =
+          new GameState {
+            val grid: Hexa[Cell] = newGrid
+            val currentPosition: Position = c.position
+            val turn: Turn = t
+            val history: Vector[Move] = self.history.:+(c)
           }
 
-        coupsValides.get(c.position).map { _ =>
-          positionGagnante(c.position) match {
-            case Some(j) => nouvellePartie(Tour.GagnePar(j))
-            case _       => nouvellePartie(Tour.Au(j.suivant))
+        allowedMoves.get(c.position).map { _ =>
+          winningPosition(c.position) match {
+            case Some(j) => newGame(Turn.WonBy(j))
+            case _       => newGame(Turn.TurnTo(j.next))
           }
         }
     }
@@ -151,48 +148,44 @@ sealed abstract class Partie { self =>
   override def toString: String =
     s"""
     |====== Partie de Slimetrail ===========
-    |  historique=$historique
+    |  history=$history
     |
-    |  tour=$tour
+    |  turn=$turn
     |
-    |  position=$positionActuelle
+    |  position=$currentPosition
     |
-    |  grille=$grille
+    |  grid=$grid
     |
     |---------------------------------------
     |""".stripMargin
 }
 
-object Partie {
-  def positionDeDepart(taille: Int): Position = {
+object GameState {
+  def startingPosition(taille: Int): Position = {
     val max = taille - 1
     val mid = max / 2
     Position(mid, max - mid)
   }
 
-  /** Etat initial d'une partie de taille donnée */
-  def debut(taille_ : Int): Partie = {
-    val lataille = math.max(taille_, 3)
+  /** Initial state of a game for a given size */
+  def initial(size: Int): GameState = {
+    val theSize = math.max(size, 3)
 
-    new Partie {
-      val grille: Hexa[Case] = Hexa.fill(lataille)(Case(false))
-      val positionActuelle: Position = Partie.positionDeDepart(taille)
-      val tour: Tour = Tour.Au(Joueur.Premier)
-      val historique: Vector[Coup] = Vector.empty
+    new GameState {
+      val grid: Hexa[Cell] = Hexa.fill(theSize)(Cell(false))
+      val currentPosition: Position = GameState.startingPosition(size)
+      val turn: Turn = Turn.TurnTo(Player.First)
+      val history: Vector[Move] = Vector.empty
     }
   }
 
-  /** Le vecteur de translation pour passer d'un hexagone de la grille de
-    * Position(X,Y) à Position(X,Y+1)
-    */
-  val haut: Point = Point.polarDeg(math.sqrt(3), 30)
+  /** The translation vector from an hexagon of the grid at Position(X,Y) to one at Position(X,Y+1) */
+  val up: Point = Point.polarDeg(math.sqrt(3), 30)
 
-  /** Le vecteur de translation pour passer d'un hexagone de la grille de
-    * Position(X,Y) à Position(X+1,Y)
-    */
-  val bas: Point = Point.polarDeg(math.sqrt(3), -30)
+  /** The translation vector from an hexagon of the grid at Position(X,Y) to one at Position(X+1,Y) */
+  val down: Point = Point.polarDeg(math.sqrt(3), -30)
 
-  /** Donne le point correspondant au centre de l'hexagone à la position donnée.*/
-  def coordonnees(pos: Position): Point =
-    (haut ** pos.haut.toDouble) + (bas ** pos.bas.toDouble)
+  /** Give the point corresponding to the center of the hexagon at the given position. */
+  def coordinates(pos: Position): Point =
+    (up ** pos.up.toDouble) + (down ** pos.down.toDouble)
 }

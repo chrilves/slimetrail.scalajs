@@ -1,4 +1,4 @@
-package object outils {
+package object toolbox {
 
   /** L'opérateur {{x == y}} de Scala est dangereux du fait qu'il autorise {{x}} et {{y}}
     * à être de types différent, ce qui est souvent le signe d'un bug.

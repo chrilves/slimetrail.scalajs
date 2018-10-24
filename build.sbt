@@ -11,68 +11,37 @@ lazy val warts =
     Wart.MutableDataStructures
   )
 
-val optionsScalacDePrudence =
-  Seq(
-    "-deprecation",
-    "-encoding",
-    "UTF8",
-    "-explaintypes",
-    "-feature",
-    "-language:-dynamics",
-    "-language:postfixOps",
-    "-language:reflectiveCalls",
-    "-language:implicitConversions",
-    "-language:higherKinds",
-    "-language:existentials",
-    "-language:experimental.macros",
-    "-unchecked",
-    "-Xlint:_",
-    "-Yno-adapted-args",
-    "-Ypartial-unification",
-    "-Ywarn-adapted-args",
-    "-Ywarn-dead-code",
-    "-Ywarn-extra-implicit",
-    "-Ywarn-inaccessible",
-    "-Ywarn-infer-any",
-    "-Ywarn-macros:both",
-    "-Ywarn-nullary-override",
-    "-Ywarn-nullary-unit",
-    "-Ywarn-numeric-widen",
-    "-Ywarn-self-implicit",
-    "-Ywarn-unused:_",
-    "-Ywarn-unused-import",
-    "-Ywarn-value-discard"
-  )
-
 lazy val settingsGlobaux: Seq[sbt.Def.SettingsDefinition] =
   Seq(
     inThisBuild(
       List(
         organization := "chrilves",
-        scalaVersion := "2.12.6",
+        scalaVersion := "2.12.7",
         version := "0.1.0-SNAPSHOT"
       )),
     updateOptions := updateOptions.value.withCachedResolution(true),
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.5" % Test,
-    scalacOptions ++= optionsScalacDePrudence,
+    scalacOptions in (Compile, console) -= "-Xfatal-warnings",
+    scalacOptions -= "-Ywarn-unused:params",
     wartremoverErrors in (Compile, compile) := warts,
     wartremoverWarnings in (Compile, console) := warts,
-    addCompilerPlugin("io.tryp" % "splain" % "0.3.1" cross CrossVersion.patch),
+    addCompilerPlugin("io.tryp" % "splain" % "0.3.4" cross CrossVersion.patch),
+    addCompilerPlugin("org.spire-math" % "kind-projector" % "0.9.8" cross CrossVersion.binary),
     scalafmtOnCompile := true
   )
 
 /* Diverses choses qui peuvent être utiles
  * comme des algorithmes de diff
  */
-lazy val outils =
+lazy val toolbox =
   crossProject(JSPlatform, JVMPlatform)
     .crossType(CrossType.Pure)
-    .in(file("outils"))
+    .in(file("toolbox"))
     .settings(settingsGlobaux: _*)
-    .settings(name := "outils")
+    .settings(name := "toolbox")
 
-lazy val outilsJS = outils.js
-lazy val outilsJVM = outils.jvm
+lazy val toolboxJS = toolbox.js
+lazy val toolboxJVM = toolbox.jvm
 
 /* Implémentation de la logique du jeu
  */
@@ -82,7 +51,7 @@ lazy val slimetrail =
     .in(file("slimetrail"))
     .settings(settingsGlobaux: _*)
     .settings(name := "slimetrail")
-    .dependsOn(outils)
+    .dependsOn(toolbox)
 
 lazy val slimetrailJS = slimetrail.js
 lazy val slimetrailJVM = slimetrail.jvm
@@ -95,7 +64,7 @@ lazy val web =
     .settings(settingsGlobaux: _*)
     .settings(
       name := "slimetrail-web",
-      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.5",
+      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.6",
       scalaJSUseMainModuleInitializer := true
     )
     .dependsOn(slimetrailJS)

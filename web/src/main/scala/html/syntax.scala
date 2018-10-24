@@ -4,143 +4,142 @@ import org.scalajs.dom.raw.{Event, HTMLInputElement}
 import Html._
 import scala.scalajs.js
 
-/** Petit DSL pour écrire un arbre HTML/SVG comme si c'était vraiment du HTML/SVG */
+/** Small DSL to write HTML/SVG trees as if it would actually be HTML/SVG */
 @SuppressWarnings(Array("org.wartremover.warts.DefaultArguments"))
 object syntax {
 
-  /** Un parametre est:
-    *  - soit un attribut, qui sera attaché au noeud correpondant.
-    *  - soit une réaction, qui sera ajouté aux event listener du noeud correpondant.
-    *  - soit Nop qui n'a aucun effet sur le HTML/SVG produit, mais est pratique sur le plan syntaxique.
+  /** A parameter is either:
+    *  - an attribute that will be attached to the corresponding node.
+    *  - a reaction that will be added to the event listener of the given node.
+    *  - Nop that has no effect on the produced HTML/SVG, but it is convenient syntactic wise.
     */
-  sealed abstract class Parametre[+A]
-  object Parametre {
-    final case class Attr(attr: (Attribut.Clef, Attribut.Valeur))
-        extends Parametre[Nothing]
-    final case class Reac[+A](reac: Reaction[A]) extends Parametre[A]
-    final case object Nop extends Parametre[Nothing]
+  sealed abstract class Parameter[+A]
+  object Parameter {
+    final case class Attr(attr: (Attribute.Key, Attribute.Value))
+        extends Parameter[Nothing]
+    final case class Reac[+A](reac: Reaction[A]) extends Parameter[A]
+    final case object Nop extends Parameter[Nothing]
   }
 
-  /** De quoi créer un noeud */
-  def noeud_[A](espaceDeNom: Namespace, balise: String)(ar: Seq[Parametre[A]])(
-      e: Seq[Html[A]]): Noeud[A] = {
+  /** Node creation helper */
+  def node_[A](namespace: Namespace, tag: String)(ar: Seq[Parameter[A]])(
+      e: Seq[Html[A]]): Tag[A] = {
 
-    val attributs: Map[Attribut.Clef, Attribut.Valeur] =
+    val attributes: Map[Attribute.Key, Attribute.Value] =
       ar.flatMap {
-        case Parametre.Attr(cd) => List(cd)
+        case Parameter.Attr(cd) => List(cd)
         case _                  => Nil
       }.toMap
 
     val reactions: Seq[Reaction[A]] =
       ar.flatMap {
-        case Parametre.Reac(r) => List(r)
+        case Parameter.Reac(r) => List(r)
         case _                 => Nil
       }
 
-    Noeud(espaceDeNom, balise, attributs, reactions, e)
+    Tag(namespace, tag, attributes, reactions, e)
   }
 
-  /** Type des constructeurs de noeuds */
-  type FaitNoeud[A] = (Parametre[A]*) => (Html[A]*) => Noeud[A]
+  /** Type of node builders */
+  type MakeNode[A] = (Parameter[A]*) => (Html[A]*) => Tag[A]
 
   @inline
-  def noeud[A](balise: String,
-               espaceDeNom: Namespace = Namespace.HTML): FaitNoeud[A] =
-    noeud_(espaceDeNom, balise) _
+  def node[A](tag: String, namespace: Namespace = Namespace.HTML): MakeNode[A] =
+    node_(namespace, tag) _
 
-  def div[A]: FaitNoeud[A] = noeud[A]("div")
-  def span[A]: FaitNoeud[A] = noeud[A]("span")
-  def a[A]: FaitNoeud[A] = noeud[A]("a")
+  def div[A]: MakeNode[A] = node[A]("div")
+  def span[A]: MakeNode[A] = node[A]("span")
+  def a[A]: MakeNode[A] = node[A]("a")
 
-  def p[A]: FaitNoeud[A] = noeud[A]("p")
-  def texte(s: String): Texte = Texte(s)
+  def p[A]: MakeNode[A] = node[A]("p")
+  def text(s: String): Text = Text(s)
 
-  def ul[A]: FaitNoeud[A] = noeud[A]("ul")
-  def li[A]: FaitNoeud[A] = noeud[A]("li")
+  def ul[A]: MakeNode[A] = node[A]("ul")
+  def li[A]: MakeNode[A] = node[A]("li")
 
-  def input[A]: FaitNoeud[A] = noeud[A]("input")
-  def button[A]: FaitNoeud[A] = noeud[A]("button")
+  def input[A]: MakeNode[A] = node[A]("input")
+  def button[A]: MakeNode[A] = node[A]("button")
 
-  def svg[A]: FaitNoeud[A] = noeud[A]("svg", Namespace.SVG)
-  def rect[A]: FaitNoeud[A] = noeud[A]("rect", Namespace.SVG)
-  def polyline[A]: FaitNoeud[A] = noeud[A]("polyline", Namespace.SVG)
-  def polygon[A]: FaitNoeud[A] = noeud[A]("polygon", Namespace.SVG)
-  def symbol[A]: FaitNoeud[A] = noeud[A]("symbol", Namespace.SVG)
-  def g[A]: FaitNoeud[A] = noeud[A]("g", Namespace.SVG)
-  def defs[A]: FaitNoeud[A] = noeud[A]("defs", Namespace.SVG)
-  def use[A]: FaitNoeud[A] = noeud[A]("use", Namespace.SVG)
-  def text[A]: FaitNoeud[A] = noeud[A]("text", Namespace.SVG)
-  def line[A]: FaitNoeud[A] = noeud[A]("line", Namespace.SVG)
+  def svg[A]: MakeNode[A] = node[A]("svg", Namespace.SVG)
+  def rect[A]: MakeNode[A] = node[A]("rect", Namespace.SVG)
+  def polyline[A]: MakeNode[A] = node[A]("polyline", Namespace.SVG)
+  def polygon[A]: MakeNode[A] = node[A]("polygon", Namespace.SVG)
+  def symbol[A]: MakeNode[A] = node[A]("symbol", Namespace.SVG)
+  def g[A]: MakeNode[A] = node[A]("g", Namespace.SVG)
+  def defs[A]: MakeNode[A] = node[A]("defs", Namespace.SVG)
+  def use[A]: MakeNode[A] = node[A]("use", Namespace.SVG)
+  def svgText[A]: MakeNode[A] = node[A]("text", Namespace.SVG)
+  def line[A]: MakeNode[A] = node[A]("line", Namespace.SVG)
 
-  val nop: Parametre[Nothing] = Parametre.Nop
+  val nop: Parameter[Nothing] = Parameter.Nop
 
-  /** Type des constructeurs d'attributs */
-  type FaitAttr = String => Parametre[Nothing]
+  /** Type of attribute builders */
+  type MakeAttr = String => Parameter[Nothing]
 
   @inline
   @SuppressWarnings(Array("org.wartremover.warts.DefaultArguments"))
-  def attr(clef: String, espace: String = ""): FaitAttr =
+  def attr(clef: String, namespace: String = ""): MakeAttr =
     v => {
-      val ns: Option[Attribut.Namespace] =
-        if (espace.isEmpty)
+      val ns: Option[Attribute.Namespace] =
+        if (namespace.isEmpty)
           None
         else
-          Some(Attribut.Namespace(espace))
+          Some(Attribute.Namespace(namespace))
 
-      Parametre.Attr(
-        (Attribut.Clef(clef, ns), Attribut.Valeur(v))
+      Parameter.Attr(
+        (Attribute.Key(clef, ns), Attribute.Value(v))
       )
     }
 
-  def `type`: FaitAttr = attr("type")
-  def id: FaitAttr = attr("id")
-  def `class`: FaitAttr = attr("class")
-  def value: FaitAttr = attr("value")
-  def x: FaitAttr = attr("x")
-  def y: FaitAttr = attr("y")
-  def width: FaitAttr = attr("width")
-  def height: FaitAttr = attr("height")
-  def style: FaitAttr = attr("style")
-  def transform: FaitAttr = attr("transform")
-  def viewBox: FaitAttr = attr("viewBox")
-  def points: FaitAttr = attr("points")
-  def fill: FaitAttr = attr("fill")
-  def stroke: FaitAttr = attr("stroke")
-  def strokeWidth: FaitAttr = attr("stroke-width")
-  def x1: FaitAttr = attr("x1")
-  def x2: FaitAttr = attr("x2")
-  def y1: FaitAttr = attr("y1")
-  def y2: FaitAttr = attr("y2")
-  def xlinkHref: FaitAttr = attr("xlink:href", "http://www.w3.org/1999/xlink")
-  def href: FaitAttr = attr("href")
+  def `type`: MakeAttr = attr("type")
+  def id: MakeAttr = attr("id")
+  def `class`: MakeAttr = attr("class")
+  def value: MakeAttr = attr("value")
+  def x: MakeAttr = attr("x")
+  def y: MakeAttr = attr("y")
+  def width: MakeAttr = attr("width")
+  def height: MakeAttr = attr("height")
+  def style: MakeAttr = attr("style")
+  def transform: MakeAttr = attr("transform")
+  def viewBox: MakeAttr = attr("viewBox")
+  def points: MakeAttr = attr("points")
+  def fill: MakeAttr = attr("fill")
+  def stroke: MakeAttr = attr("stroke")
+  def strokeWidth: MakeAttr = attr("stroke-width")
+  def x1: MakeAttr = attr("x1")
+  def x2: MakeAttr = attr("x2")
+  def y1: MakeAttr = attr("y1")
+  def y2: MakeAttr = attr("y2")
+  def xlinkHref: MakeAttr = attr("xlink:href", "http://www.w3.org/1999/xlink")
+  def href: MakeAttr = attr("href")
 
-  def checked(b: Boolean): Parametre[Nothing] =
+  def checked(b: Boolean): Parameter[Nothing] =
     if (b)
       attr("checked")("checked")
     else
-      Parametre.Nop
+      Parameter.Nop
 
-  /** Type des constructeurs de réaction */
-  type FaitReaction[A] = js.Function1[_ <: Event, A] => Parametre[A]
+  /** Type of reaction builders */
+  type MakeReaction[A] = js.Function1[_ <: Event, A] => Parameter[A]
 
   @inline
-  def on[T <: Event, A](`type`: String)(f: js.Function1[T, A]): Parametre[A] =
-    Parametre.Reac(Reaction(`type`, (e: T) => {
+  def on[T <: Event, A](`type`: String)(f: js.Function1[T, A]): Parameter[A] =
+    Parameter.Reac(Reaction(`type`, (e: T) => {
       e.stopPropagation()
       f(e)
     }))
 
   @inline
-  def on0[A](`type`: String)(msg: => A): Parametre[A] =
+  def on0[A](`type`: String)(msg: => A): Parameter[A] =
     on[Event, A](`type`) { _ =>
       msg
     }
 
-  @inline def onsubmit[A](msg: => A): Parametre[A] = on0("submit")(msg)
-  @inline def onclick[A](msg: => A): Parametre[A] = on0("click")(msg)
+  @inline def onsubmit[A](msg: => A): Parameter[A] = on0("submit")(msg)
+  @inline def onclick[A](msg: => A): Parameter[A] = on0("click")(msg)
 
   @inline
-  def onInputElement[A](ext: HTMLInputElement => A): Parametre[A] =
+  def onInputElement[A](ext: HTMLInputElement => A): Parameter[A] =
     on[Event, A]("input") { (e: Event) =>
       e.target match {
         case input: HTMLInputElement =>
@@ -149,10 +148,10 @@ object syntax {
     }
 
   @inline
-  def oninput[A](reaction: String => A): Parametre[A] =
+  def oninput[A](reaction: String => A): Parameter[A] =
     onInputElement[A](i => reaction(i.value))
 
   @inline
-  def oncheck[A](reaction: Boolean => A): Parametre[A] =
+  def oncheck[A](reaction: Boolean => A): Parameter[A] =
     onInputElement[A](i => reaction(i.checked))
 }

@@ -1,51 +1,51 @@
 package slimetrail
 
-import outils._
+import toolbox._
 import scala.annotation._
 
-/** Implémentation d'une grille carrée hexagonale immutable.
-  * Les positions {{Position(h,b)}} définies pour une grille de taille {{t}} sont:
+/** Implementation of an immutable hexagonal grid.
+  * Positions {{Position(h,b)}} definied for a grid of size {{t}} are:
   *
   * `0 <= h < t`
   * `0 <= b < t`
   */
-final class Hexa[+A](val taille: Int, cells: Vector[A]) {
+final class Hexa[+A](val size: Int, cells: Vector[A]) {
   private val debug: Boolean = false
   @inline private def log(s: => String): Unit =
     if (debug) println(s)
 
   private def offset(p: Position): Option[Int] =
-    if (p.haut >= 0 && p.haut < taille && p.bas >= 0 && p.bas < taille)
-      Some(p.haut * taille + p.bas)
+    if (p.up >= 0 && p.up < size && p.down >= 0 && p.down < size)
+      Some(p.up * size + p.down)
     else
       None
 
   private def position(i: Int): Position =
-    Position(haut = i / taille, bas = i % taille)
+    Position(up = i / size, down = i % size)
 
-  /** Récupère la valeur stockée dans une position */
+  /** Get the value stored at that position*/
   def get(p: Position): Option[A] =
     offset(p).flatMap(cells.lift(_))
 
-  /** Renvoie une grille ou la position {{position}} vaut {{valeur}}
-    * (si cette position est dans les limites de la grille, sinon renvoie la grille d'origine)
+  /** Return a grid where the position {{position}} is {{value}}
+    * (if this position is within the limits of the grid, otherwise return the input grid)
     */
-  def set[B >: A](position: Position, valeur: B): Hexa[B] =
+  def set[B >: A](position: Position, value: B): Hexa[B] =
     offset(position) match {
       case Some(i) =>
-        new Hexa[B](taille, cells.updated(i, valeur))
+        new Hexa[B](size, cells.updated(i, value))
       case _ => this
     }
 
   def map[B](f: A => B): Hexa[B] =
-    new Hexa[B](taille, cells.map(f))
+    new Hexa[B](size, cells.map(f))
 
   def indexedMap[B](f: (Position, A) => B): Hexa[B] = {
     val builder = Vector.newBuilder[B]
     for (i <- 0 to cells.size - 1) {
       builder += f(position(i), cells(i))
     }
-    new Hexa[B](taille, builder.result)
+    new Hexa[B](size, builder.result)
   }
 
   def toVector: Vector[A] = cells
@@ -53,14 +53,14 @@ final class Hexa[+A](val taille: Int, cells: Vector[A]) {
   override def toString =
     s"""{
     |${indexedMap {
-         case (p, a) => s"  (${p.haut},${p.bas})\t-> $a"
+         case (p, a) => s"  (${p.up},${p.down})\t-> $a"
        }.toVector.mkString("\n")}
     |}""".stripMargin
 
-  /** Calcule si les deux positions peuvent être reliés par des cases respectant le prédicat */
-  def connecteesPar(
-      predicat: (Position, A) => Boolean,
-      origine: Position,
+  /** Check whether two positions can be connected by a path made of cells for which the prediate holds*/
+  def connectedBy(
+      predicate: (Position, A) => Boolean,
+      origin: Position,
       destination: Position
   ): Boolean = {
 
@@ -76,31 +76,31 @@ final class Hexa[+A](val taille: Int, cells: Vector[A]) {
           if (hd === destination)
             true
           else {
-            val suivantes =
-              hd.voisinnes
+            val next =
+              hd.neighbors
                 .filter { p2 =>
                   get(p2) match {
                     case Some(a) =>
                       log(s"[Hexa.atteignabePar] grille[$p2]=$a")
-                      !added.contains(p2) && predicat(p2, a)
+                      !added.contains(p2) && predicate(p2, a)
                     case None =>
                       log(s"[Hexa.atteignabePar] grille[$p2] n'existe pas.")
                       false
                   }
                 }
 
-            rec(added ++ suivantes, suivantes.toList ++ tl)
+            rec(added ++ next, next.toList ++ tl)
           }
       }
     }
 
-    rec(Set(origine), List(origine))
+    rec(Set(origin), List(origin))
   }
 
-  /** Calcule les positions atteignables depuis la position donnée en respectant le prédicat*/
-  def atteignableDepuis(
-      origine: Position,
-      predicat: (Position, A) => Boolean
+  /** Compure reachable positions from the one given as input by paths satisfying the predicate*/
+  def reachableFrom(
+      origin: Position,
+      predicate: (Position, A) => Boolean
   ): Set[Position] = {
 
     @tailrec
@@ -112,36 +112,36 @@ final class Hexa[+A](val taille: Int, cells: Vector[A]) {
           added
 
         case hd :: tl =>
-          val suivantes =
-            hd.voisinnes
+          val next =
+            hd.neighbors
               .filter { p2 =>
                 get(p2) match {
                   case Some(a) =>
                     log(s"[Hexa.atteignabeDepuis] grille[$p2]=$a")
-                    !added.contains(p2) && predicat(p2, a)
+                    !added.contains(p2) && predicate(p2, a)
                   case None =>
                     log(s"[Hexa.atteignabeDepuis] grille[$p2] n'existe pas.")
                     false
                 }
               }
 
-          rec(added ++ suivantes, suivantes.toList ++ tl)
+          rec(added ++ next, next.toList ++ tl)
       }
     }
 
-    rec(Set(origine), List(origine))
+    rec(Set(origin), List(origin))
   }
 }
 
 object Hexa {
 
-  /** Crée une grille hexagonale carrée immutable de taille {{taille}} remplie de {{value}}*/
-  def fill[A](_taille: Int)(value: A): Hexa[A] =
-    new Hexa[A](_taille, Vector.fill(_taille * _taille)(value))
+  /** Create an immutable square hexagonal grid of size {{size}} filled with {{value}}*/
+  def fill[A](_size: Int)(value: A): Hexa[A] =
+    new Hexa[A](_size, Vector.fill(_size * _size)(value))
 
-  /** Crée une grille hexagonale carrée immutable de taille {{taille}} remplie par {{f}}*/
-  def tabulate[A](_taille: Int)(f: Position => A): Hexa[A] =
-    new Hexa[A](_taille, Vector.tabulate(_taille * _taille) { i =>
-      f(Position(haut = i / _taille, bas = i % _taille))
+  /** Create an immutable square hexagonal grid of size {{size}} filled by {{f}}*/
+  def tabulate[A](_size: Int)(f: Position => A): Hexa[A] =
+    new Hexa[A](_size, Vector.tabulate(_size * _size) { i =>
+      f(Position(up = i / _size, down = i % _size))
     })
 }

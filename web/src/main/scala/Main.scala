@@ -5,12 +5,12 @@ import org.scalajs.dom._
 import dom.document
 
 object Main {
-  def auChargement(a: => Unit): Unit =
+  def onLoading(a: => Unit): Unit =
     dom.document.addEventListener("DOMContentLoaded", (_: Event) => a)
 
   def main(args: Array[String]): Unit =
-    auChargement {
-      new AppliWebSlimetrail(10)
-        .executer(document.getElementById("espaceScalaJS"))
+    onLoading {
+      new SlimetrailWebApp(10)
+        .run(document.getElementById("espaceScalaJS"))
     }
 }

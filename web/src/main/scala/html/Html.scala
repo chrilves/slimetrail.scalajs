@@ -4,52 +4,52 @@ import org.scalajs.dom.raw._
 import org.scalajs.dom._
 import scalajs.js
 
-/** Represente un attrinut HTML*/
-object Attribut {
+/** An HTML Attribute */
+object Attribute {
 
-  /** Le namespace de l'attribut HTML. Il est sage de toujours mettre un namespace. */
-  final case class Namespace(valeur: String) extends AnyVal
+  /** The namespace of the HTML attribute. It is wise to always set the namespace. */
+  final case class Namespace(value: String) extends AnyVal
 
-  /* Un attrinut HTML est en fait une paire d'un nom et d'un namespace */
-  final case class Clef(valeur: String, espace: Option[Namespace])
+  /** An HTML attribute is actually a pair of a name and a namespace */
+  final case class Key(value: String, namespace: Option[Namespace])
 
-  /** La valeur de l'attribut HTML */
-  final case class Valeur(valeur: String) extends AnyVal
+  /** The value of the HTML attribute */
+  final case class Value(value: String) extends AnyVal
 }
 
-/** A fournir a addEventListener */
+/** To be given to addEventListener */
 final case class Reaction[+A](`type`: String,
                               reaction: js.Function1[_ <: Event, A]) {
   def map[B](f: A => B): Reaction[B] =
     Reaction(`type`, reaction.andThen(f))
 }
 
-/** Namespace de noeud, soit HTML soit SVG */
+/** Namespace of the tag node, either HTML or SVG */
 sealed abstract class Namespace(val uri: String)
 object Namespace {
   case object HTML extends Namespace("http://www.w3.org/1999/xhtml")
   case object SVG extends Namespace("http://www.w3.org/2000/svg")
 }
 
-/** Représente un arbre HTML/SVG dont les réactions produise des valeurs de type A*/
+/** Represents an HTML/SVG tree whose reactions produce values of type A*/
 sealed abstract class Html[+A] {
   def map[B](f: A => B): Html[B]
 
   import Html._
 
-  /** Crée un noeud du DOM correspondant à cet HTML/SVG */
+  /** Draw a DOM node corresponding to this HTML/SVG tree */
   @SuppressWarnings(Array("org.wartremover.warts.Null"))
-  final def dessiner: Node =
+  final def draw: Node =
     this match {
-      case Texte(s) =>
+      case Text(s) =>
         document.createTextNode(s)
 
-      case Noeud(espace, balise, attributs, reactions, enfants) =>
-        val b: Element = document.createElementNS(espace.uri, balise)
+      case Tag(namespace, tag, attributes, reactions, children) =>
+        val b: Element = document.createElementNS(namespace.uri, tag)
 
-        attributs.foreach {
-          case (Attribut.Clef(clef, ns), Attribut.Valeur(valeur)) =>
-            b.setAttributeNS(ns.map(_.valeur).getOrElse(null), clef, valeur)
+        attributes.foreach {
+          case (Attribute.Key(clef, ns), Attribute.Value(valeur)) =>
+            b.setAttributeNS(ns.map(_.value).getOrElse(null), clef, valeur)
         }
 
         reactions.foreach {
@@ -57,8 +57,8 @@ sealed abstract class Html[+A] {
             b.addEventListener(t, r, false)
         }
 
-        enfants.foreach { enfant =>
-          b.appendChild(enfant.dessiner)
+        children.foreach { children =>
+          b.appendChild(children.draw)
         }
 
         b
@@ -67,28 +67,28 @@ sealed abstract class Html[+A] {
 
 object Html {
 
-  /** Représente un noeud Texte */
-  final case class Texte(valeur: String) extends Html[Nothing] {
+  /** Represents a texte node */
+  final case class Text(value: String) extends Html[Nothing] {
     def map[B](f: Nothing => B): Html[B] = this
-    override def toString = valeur
+    override def toString: String = value
   }
 
-  /** Représente un noeud non texte */
-  final case class Noeud[+A](
-      espaceDeNom: Namespace,
-      balise: String,
-      attributs: Map[Attribut.Clef, Attribut.Valeur],
+  /** Represents a tag node */
+  final case class Tag[+A](
+      namespace: Namespace,
+      tag: String,
+      attributes: Map[Attribute.Key, Attribute.Value],
       reactions: Seq[Reaction[A]],
-      enfants: Seq[Html[A]]
+      children: Seq[Html[A]]
   ) extends Html[A] {
 
     def map[B](f: A => B): Html[B] =
-      Noeud(
-        espaceDeNom,
-        balise,
-        attributs,
+      Tag(
+        namespace,
+        tag,
+        attributes,
         reactions.map(_.map(f)),
-        enfants.map(_.map(f))
+        children.map(_.map(f))
       )
   }
 }

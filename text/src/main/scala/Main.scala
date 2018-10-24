@@ -1,4 +1,4 @@
-package slimetrail.texte
+package slimetrail.text
 
 object Main {
   def main(args: Array[String]): Unit =

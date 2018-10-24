@@ -1,4 +1,4 @@
-package slimetrail.texte
+package slimetrail.text
 
 import scala.annotation._
 import slimetrail._

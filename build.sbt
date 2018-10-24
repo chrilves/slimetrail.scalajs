@@ -70,9 +70,9 @@ lazy val web =
     .dependsOn(slimetrailJS)
 
 // Interface texte
-lazy val texte =
+lazy val text =
   project
-    .in(file("texte"))
+    .in(file("text"))
     .settings(settingsGlobaux: _*)
-    .settings(name := "slimetrail-texte")
+    .settings(name := "slimetrail-text")
     .dependsOn(slimetrailJVM)

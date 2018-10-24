@@ -1,4 +1,4 @@
-package slimetrail.texte
+package slimetrail.text
 
 import slimetrail._
 

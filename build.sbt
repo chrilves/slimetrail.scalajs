@@ -1,17 +1,15 @@
 // shadow sbt-scalajs' crossProject and CrossType until Scala.js 1.0.0 is released
-import sbtcrossproject.{crossProject, CrossType}
+import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
-// voir http://www.wartremover.org/
+// see http://www.wartremover.org/
 lazy val warts =
   Warts.allBut(
     Wart.Nothing,
-    Wart.ImplicitConversion,
     Wart.Recursion,
-    Wart.NonUnitStatements,
-    Wart.MutableDataStructures
+    Wart.NonUnitStatements
   )
 
-lazy val settingsGlobaux: Seq[sbt.Def.SettingsDefinition] =
+lazy val commonSettings: Seq[sbt.Def.SettingsDefinition] =
   Seq(
     inThisBuild(
       List(
@@ -30,49 +28,46 @@ lazy val settingsGlobaux: Seq[sbt.Def.SettingsDefinition] =
     scalafmtOnCompile := true
   )
 
-/* Diverses choses qui peuvent être utiles
- * comme des algorithmes de diff
- */
+/* Things maybe useful*/
 lazy val toolbox =
   crossProject(JSPlatform, JVMPlatform)
     .crossType(CrossType.Pure)
     .in(file("toolbox"))
-    .settings(settingsGlobaux: _*)
+    .settings(commonSettings: _*)
     .settings(name := "toolbox")
 
 lazy val toolboxJS = toolbox.js
 lazy val toolboxJVM = toolbox.jvm
 
-/* Implémentation de la logique du jeu
- */
+/* Game Logic */
 lazy val slimetrail =
   crossProject(JSPlatform, JVMPlatform)
     .crossType(CrossType.Pure)
     .in(file("slimetrail"))
-    .settings(settingsGlobaux: _*)
+    .settings(commonSettings: _*)
     .settings(name := "slimetrail")
     .dependsOn(toolbox)
 
 lazy val slimetrailJS = slimetrail.js
 lazy val slimetrailJVM = slimetrail.jvm
 
-// Interface web
+// Text Interface
+lazy val text =
+  project
+    .in(file("text"))
+    .settings(commonSettings: _*)
+    .settings(name := "slimetrail-text")
+    .dependsOn(slimetrailJVM)
+
+// Web Interface
 lazy val web =
   project
     .in(file("web"))
     .enablePlugins(ScalaJSPlugin)
-    .settings(settingsGlobaux: _*)
+    .settings(commonSettings: _*)
     .settings(
       name := "slimetrail-web",
       libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.6",
       scalaJSUseMainModuleInitializer := true
     )
     .dependsOn(slimetrailJS)
-
-// Interface texte
-lazy val text =
-  project
-    .in(file("text"))
-    .settings(settingsGlobaux: _*)
-    .settings(name := "slimetrail-text")
-    .dependsOn(slimetrailJVM)

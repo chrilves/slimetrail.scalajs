@@ -11,7 +11,7 @@ trait TextApplication extends Application { self =>
     */
   def view(model: Model): Msg
 
-  /** Exécute une application.*/
+  /** Run an application.*/
   final def run(): Unit = {
     @tailrec
     def loop(model: Model): Unit = {

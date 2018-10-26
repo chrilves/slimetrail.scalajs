@@ -1,0 +1,8 @@
+[book]
+title = "How to make game in the browser thanks to ScalaJS"
+authors = ["Christophe Calvès"]
+multilingual = false
+src = "src"
+
+[output.html]
+mathjax-support = true

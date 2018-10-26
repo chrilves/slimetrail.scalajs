@@ -70,6 +70,7 @@ object syntax {
   def use[A]: MakeNode[A] = node[A]("use", Namespace.SVG)
   def svgText[A]: MakeNode[A] = node[A]("text", Namespace.SVG)
   def line[A]: MakeNode[A] = node[A]("line", Namespace.SVG)
+  def styleTag[A]: MakeNode[A] = node[A]("style", Namespace.HTML)
 
   val nop: Parameter[Nothing] = Parameter.Nop
 
@@ -92,6 +93,7 @@ object syntax {
     }
 
   def `type`: MakeAttr = attr("type")
+  def media: MakeAttr = attr("media")
   def id: MakeAttr = attr("id")
   def `class`: MakeAttr = attr("class")
   def value: MakeAttr = attr("value")
@@ -112,6 +114,7 @@ object syntax {
   def y2: MakeAttr = attr("y2")
   def xlinkHref: MakeAttr = attr("xlink:href", "http://www.w3.org/1999/xlink")
   def href: MakeAttr = attr("href")
+  def xmlns: MakeAttr = attr("xmlns")
 
   def checked(b: Boolean): Parameter[Nothing] =
     if (b)

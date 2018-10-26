@@ -12,6 +12,25 @@ final class SlimetrailWebApp(taille: Int)
     import html.syntax._
     log(s"[Slimetrail] Computing view")
 
+    val theStyle =
+      styleTag(`type`("text/css"), media("screen"))(
+        text("""
+          |  .first-player-goal { fill:#0d0; }
+          |  .first-player-allowed-move { fill:#afa; }
+          |  .first-player-move { stroke: #0f0; }
+          |
+          |  .second-player-goal { fill:#dd0; }
+          |  .second-player-allowed-move { fill:#ffa; }
+          |  .second-player-move { stroke:#ff0; }
+          |
+          |  .empty-cell { fill: #ccf; }
+          |  .visited-cell { fill: #000; }
+          |
+          | .current-position { fill: #a00;}
+          |
+          | .title { stroke: none; fill: white; }
+        """.stripMargin))
+
     val allowedMoves: Set[Position] = m.allowedMoves.keySet
 
     val classOfAllowedMoves: String =
@@ -91,9 +110,17 @@ final class SlimetrailWebApp(taille: Int)
 
     svg(
       viewBox(s"-1 ${-m.halfHeigh} ${m.width} ${2 * m.halfHeigh}"),
-      style("stroke-width: 0.01;"),
+      style("""
+          | stroke-width: 0.01;
+          | background-color: rgb(103, 103, 238);
+          | display:block;
+          | position:fixed;
+          | top:5%; left:5%; width:90%; height:90%;
+          | margin:auto;
+        """.stripMargin),
       if (!m.onGoing) onclick(Action.NewGame: Msg) else nop
     )(
+      theStyle,
       g(id("board"), transform("scale(1,-1)"))(
         symbol(id("hexagon"),
                x("-1"),

@@ -11,6 +11,6 @@ object Main {
   def main(args: Array[String]): Unit =
     onLoading {
       new SlimetrailWebApp(10)
-        .run(document.getElementById("espaceScalaJS"))
+        .run(document.getElementById("scalajs-controlled-node"))
     }
 }

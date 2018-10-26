@@ -22,7 +22,7 @@ final class SlimetrailTextApp(size: Int)
     val colorOfCellMoves: Map[Position, String] =
       allowedMoves.map((_, colorOfAllowedMoves)).toMap ++
         Map(
-          m.firstPlayerGoal -> s"${Console.GREEN}P${Console.RESET}",
+          m.firstPlayerGoal -> s"${Console.GREEN}F${Console.RESET}",
           m.secondPlayerGoal -> s"${Console.YELLOW}S${Console.RESET}",
           m.currentPosition -> s"${Console.RED}A${Console.RESET}"
         )

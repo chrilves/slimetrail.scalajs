@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-1 -8.660254037844386 29 17.32050807568877" style="
+ stroke-width: 0.01;
+ background-color: rgb(103, 103, 238);
+ display:block;
+ position:fixed;
+ top:5%; left:5%; width:90%; height:90%;
+ margin:-3%;
+        ">
+  <style type="text/css" media="screen">
+  .first-player-goal { fill:#0d0; }
+  .first-player-allowed-move { fill:#afa; }
+  .first-player-move { stroke: #0f0; }
+
+  .second-player-goal { fill:#dd0; }
+  .second-player-allowed-move { fill:#ffa; }
+  .second-player-move { stroke:#ff0; }
+
+  .empty-cell { fill: #ccf; }
+  .visited-cell { fill: #000; }
+
+ .current-position { fill: #a00;}
+
+ .title { stroke: none; fill: white; }
+  </style>
+  <g id="board" transform="scale(1,-1)">
+    <symbol width="2" x="-1" viewBox="-1 -1 2 2" id="hexagon" height="2" y="-1">
+      <polygon style="stroke:black;" points="1,0 0.5000000000000001,0.8660254037844386 -0.4999999999999998,0.8660254037844387 -1,1.2246467991473532e-16 -0.5000000000000004,-0.8660254037844384 0.5000000000000001,-0.8660254037844386"></polygon>
+    </symbol>
+    <g id="hexagons">
+      <use xlink:href="#hexagon" width="2" x="0" class="empty-cell" height="2" y="0"></use>
+      <use xlink:href="#hexagon" width="2" x="1.5" class="empty-cell" height="2" y="-0.8660254037844385"></use>
+      <use xlink:href="#hexagon" width="2" x="3" class="empty-cell" height="2" y="-1.732050807568877"></use>
+      <use xlink:href="#hexagon" width="2" x="4.5" class="empty-cell" height="2" y="-2.5980762113533156"></use>
+      <use xlink:href="#hexagon" width="2" x="6" class="empty-cell" height="2" y="-3.464101615137754"></use>
+      <use xlink:href="#hexagon" width="2" x="7.5" class="empty-cell" height="2" y="-4.330127018922193"></use>
+      <use xlink:href="#hexagon" width="2" x="9" class="empty-cell" height="2" y="-5.196152422706631"></use>
+      <use xlink:href="#hexagon" width="2" x="10.5" class="empty-cell" height="2" y="-6.0621778264910695"></use>
+      <use xlink:href="#hexagon" width="2" x="12" class="empty-cell" height="2" y="-6.928203230275508"></use>
+      <use xlink:href="#hexagon" width="2" x="13.5" class="second-player-goal" height="2" y="-7.794228634059946"></use>
+      <use xlink:href="#hexagon" width="2" x="1.5" class="empty-cell" height="2" y="0.8660254037844385"></use>
+      <use xlink:href="#hexagon" width="2" x="3" class="empty-cell" height="2" y="0"></use>
+      <use xlink:href="#hexagon" width="2" x="4.5" class="empty-cell" height="2" y="-0.8660254037844385"></use>
+      <use xlink:href="#hexagon" width="2" x="6" class="empty-cell" height="2" y="-1.7320508075688772"></use>
+      <use xlink:href="#hexagon" width="2" x="7.5" class="empty-cell" height="2" y="-2.5980762113533156"></use>
+      <use xlink:href="#hexagon" width="2" x="9" class="empty-cell" height="2" y="-3.4641016151377544"></use>
+      <use xlink:href="#hexagon" width="2" x="10.5" class="empty-cell" height="2" y="-4.330127018922193"></use>
+      <use xlink:href="#hexagon" width="2" x="12" class="empty-cell" height="2" y="-5.196152422706631"></use>
+      <use xlink:href="#hexagon" width="2" x="13.5" class="empty-cell" height="2" y="-6.0621778264910695"></use>
+      <use xlink:href="#hexagon" width="2" x="15" class="empty-cell" height="2" y="-6.928203230275508"></use>
+      <use xlink:href="#hexagon" width="2" x="3" class="empty-cell" height="2" y="1.732050807568877"></use>
+      <use xlink:href="#hexagon" width="2" x="4.5" class="empty-cell" height="2" y="0.8660254037844385"></use>
+      <use xlink:href="#hexagon" width="2" x="6" class="empty-cell" height="2" y="0"></use>
+      <use xlink:href="#hexagon" width="2" x="7.5" class="empty-cell" height="2" y="-0.8660254037844386"></use>
+      <use xlink:href="#hexagon" width="2" x="9" class="empty-cell" height="2" y="-1.732050807568877"></use>
+      <use xlink:href="#hexagon" width="2" x="10.5" class="empty-cell" height="2" y="-2.598076211353316"></use>
+      <use xlink:href="#hexagon" width="2" x="12" class="empty-cell" height="2" y="-3.4641016151377544"></use>
+      <use xlink:href="#hexagon" width="2" x="13.5" class="empty-cell" height="2" y="-4.330127018922193"></use>
+      <use xlink:href="#hexagon" width="2" x="15" class="empty-cell" height="2" y="-5.196152422706631"></use>
+      <use xlink:href="#hexagon" width="2" x="16.5" class="empty-cell" height="2" y="-6.0621778264910695"></use>
+      <use xlink:href="#hexagon" width="2" x="4.5" class="empty-cell" height="2" y="2.5980762113533156"></use>
+      <use xlink:href="#hexagon" width="2" x="6" class="empty-cell" height="2" y="1.7320508075688772"></use>
+      <use xlink:href="#hexagon" width="2" x="7.5" class="empty-cell" height="2" y="0.8660254037844386"></use>
+      <use xlink:href="#hexagon" width="2" x="9" class="empty-cell" height="2" y="0"></use>
+      <use xlink:href="#hexagon" width="2" x="10.5" class="empty-cell" height="2" y="-0.8660254037844384"></use>
+      <use xlink:href="#hexagon" width="2" x="12" class="first-player-allowed-move" height="2" y="-1.7320508075688772"></use>
+      <use xlink:href="#hexagon" width="2" x="13.5" class="first-player-allowed-move" height="2" y="-2.5980762113533156"></use>
+      <use xlink:href="#hexagon" width="2" x="15" class="empty-cell" height="2" y="-3.464101615137754"></use>
+      <use xlink:href="#hexagon" width="2" x="16.5" class="empty-cell" height="2" y="-4.330127018922193"></use>
+      <use xlink:href="#hexagon" width="2" x="18" class="empty-cell" height="2" y="-5.19615242270663"></use>
+      <use xlink:href="#hexagon" width="2" x="6" class="empty-cell" height="2" y="3.464101615137754"></use>
+      <use xlink:href="#hexagon" width="2" x="7.5" class="empty-cell" height="2" y="2.5980762113533156"></use>
+      <use xlink:href="#hexagon" width="2" x="9" class="empty-cell" height="2" y="1.732050807568877"></use>
+      <use xlink:href="#hexagon" width="2" x="10.5" class="empty-cell" height="2" y="0.8660254037844384"></use>
+      <use xlink:href="#hexagon" width="2" x="12" class="first-player-allowed-move" height="2" y="0"></use>
+      <use xlink:href="#hexagon" width="2" x="13.5" class="current-position" height="2" y="-0.8660254037844388"></use>
+      <use xlink:href="#hexagon" width="2" x="15" class="first-player-allowed-move" height="2" y="-1.7320508075688772"></use>
+      <use xlink:href="#hexagon" width="2" x="16.5" class="empty-cell" height="2" y="-2.5980762113533156"></use>
+      <use xlink:href="#hexagon" width="2" x="18" class="empty-cell" height="2" y="-3.464101615137754"></use>
+      <use xlink:href="#hexagon" width="2" x="19.5" class="empty-cell" height="2" y="-4.330127018922193"></use>
+      <use xlink:href="#hexagon" width="2" x="7.5" class="empty-cell" height="2" y="4.330127018922193"></use>
+      <use xlink:href="#hexagon" width="2" x="9" class="empty-cell" height="2" y="3.4641016151377544"></use>
+      <use xlink:href="#hexagon" width="2" x="10.5" class="empty-cell" height="2" y="2.598076211353316"></use>
+      <use xlink:href="#hexagon" width="2" x="12" class="empty-cell" height="2" y="1.7320508075688772"></use>
+      <use xlink:href="#hexagon" width="2" x="13.5" class="first-player-allowed-move" height="2" y="0.8660254037844388"></use>
+      <use xlink:href="#hexagon" width="2" x="15" class="first-player-allowed-move" height="2" y="0"></use>
+      <use xlink:href="#hexagon" width="2" x="16.5" class="empty-cell" height="2" y="-0.8660254037844384"></use>
+      <use xlink:href="#hexagon" width="2" x="18" class="empty-cell" height="2" y="-1.7320508075688767"></use>
+      <use xlink:href="#hexagon" width="2" x="19.5" class="empty-cell" height="2" y="-2.598076211353315"></use>
+      <use xlink:href="#hexagon" width="2" x="21" class="empty-cell" height="2" y="-3.4641016151377535"></use>
+      <use xlink:href="#hexagon" width="2" x="9" class="empty-cell" height="2" y="5.196152422706631"></use>
+      <use xlink:href="#hexagon" width="2" x="10.5" class="empty-cell" height="2" y="4.330127018922193"></use>
+      <use xlink:href="#hexagon" width="2" x="12" class="empty-cell" height="2" y="3.4641016151377544"></use>
+      <use xlink:href="#hexagon" width="2" x="13.5" class="empty-cell" height="2" y="2.5980762113533156"></use>
+      <use xlink:href="#hexagon" width="2" x="15" class="empty-cell" height="2" y="1.7320508075688772"></use>
+      <use xlink:href="#hexagon" width="2" x="16.5" class="empty-cell" height="2" y="0.8660254037844384"></use>
+      <use xlink:href="#hexagon" width="2" x="18" class="empty-cell" height="2" y="0"></use>
+      <use xlink:href="#hexagon" width="2" x="19.5" class="empty-cell" height="2" y="-0.8660254037844384"></use>
+      <use xlink:href="#hexagon" width="2" x="21" class="empty-cell" height="2" y="-1.7320508075688767"></use>
+      <use xlink:href="#hexagon" width="2" x="22.5" class="empty-cell" height="2" y="-2.598076211353315"></use>
+      <use xlink:href="#hexagon" width="2" x="10.5" class="empty-cell" height="2" y="6.0621778264910695"></use>
+      <use xlink:href="#hexagon" width="2" x="12" class="empty-cell" height="2" y="5.196152422706631"></use>
+      <use xlink:href="#hexagon" width="2" x="13.5" class="empty-cell" height="2" y="4.330127018922193"></use>
+      <use xlink:href="#hexagon" width="2" x="15" class="empty-cell" height="2" y="3.464101615137754"></use>
+      <use xlink:href="#hexagon" width="2" x="16.5" class="empty-cell" height="2" y="2.5980762113533156"></use>
+      <use xlink:href="#hexagon" width="2" x="18" class="empty-cell" height="2" y="1.7320508075688767"></use>
+      <use xlink:href="#hexagon" width="2" x="19.5" class="empty-cell" height="2" y="0.8660254037844384"></use>
+      <use xlink:href="#hexagon" width="2" x="21" class="empty-cell" height="2" y="0"></use>
+      <use xlink:href="#hexagon" width="2" x="22.5" class="empty-cell" height="2" y="-0.8660254037844384"></use>
+      <use xlink:href="#hexagon" width="2" x="24" class="empty-cell" height="2" y="-1.7320508075688767"></use>
+      <use xlink:href="#hexagon" width="2" x="12" class="empty-cell" height="2" y="6.928203230275508"></use>
+      <use xlink:href="#hexagon" width="2" x="13.5" class="empty-cell" height="2" y="6.0621778264910695"></use>
+      <use xlink:href="#hexagon" width="2" x="15" class="empty-cell" height="2" y="5.196152422706631"></use>
+      <use xlink:href="#hexagon" width="2" x="16.5" class="empty-cell" height="2" y="4.330127018922193"></use>
+      <use xlink:href="#hexagon" width="2" x="18" class="empty-cell" height="2" y="3.464101615137754"></use>
+      <use xlink:href="#hexagon" width="2" x="19.5" class="empty-cell" height="2" y="2.598076211353315"></use>
+      <use xlink:href="#hexagon" width="2" x="21" class="empty-cell" height="2" y="1.7320508075688767"></use>
+      <use xlink:href="#hexagon" width="2" x="22.5" class="empty-cell" height="2" y="0.8660254037844384"></use>
+      <use xlink:href="#hexagon" width="2" x="24" class="empty-cell" height="2" y="0"></use>
+      <use xlink:href="#hexagon" width="2" x="25.5" class="empty-cell" height="2" y="-0.8660254037844384"></use>
+      <use xlink:href="#hexagon" width="2" x="13.5" class="first-player-goal" height="2" y="7.794228634059946"></use>
+      <use xlink:href="#hexagon" width="2" x="15" class="empty-cell" height="2" y="6.928203230275508"></use>
+      <use xlink:href="#hexagon" width="2" x="16.5" class="empty-cell" height="2" y="6.0621778264910695"></use>
+      <use xlink:href="#hexagon" width="2" x="18" class="empty-cell" height="2" y="5.19615242270663"></use>
+      <use xlink:href="#hexagon" width="2" x="19.5" class="empty-cell" height="2" y="4.330127018922193"></use>
+      <use xlink:href="#hexagon" width="2" x="21" class="empty-cell" height="2" y="3.4641016151377535"></use>
+      <use xlink:href="#hexagon" width="2" x="22.5" class="empty-cell" height="2" y="2.598076211353315"></use>
+      <use xlink:href="#hexagon" width="2" x="24" class="empty-cell" height="2" y="1.7320508075688767"></use>
+      <use xlink:href="#hexagon" width="2" x="25.5" class="empty-cell" height="2" y="0.8660254037844384"></use>
+      <use xlink:href="#hexagon" width="2" x="27" class="empty-cell" height="2" y="0"></use>
+    </g>
+    <g id="path"></g>
+  </g>
+  <g id="rules">
+    <text x="-0.0625" y="-6.928203230275509" style="font-size: 10%;" class="title">Slimetrail</text>
+  </g>
+</svg>

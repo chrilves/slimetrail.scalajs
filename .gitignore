@@ -3,5 +3,6 @@
 target/
 .js/
 .jvm/
-fast.html
-full.html
+.idea/
+mdbook/book/
+.vscode/

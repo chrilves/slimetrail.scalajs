@@ -119,7 +119,7 @@ sealed abstract class GameState { self =>
   }
 
   /** Play a move. If the last one is allowed, return the new game state.
-    * Otherwise return {{None}}.
+    * Otherwise return {{[None}}}.
     */
   final def playAMove(c: Move): Option[GameState] =
     turn match {

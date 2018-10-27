@@ -4,7 +4,7 @@ import toolbox._
 import scala.annotation._
 
 /** Implementation of an immutable hexagonal grid.
-  * Positions {{Position(h,b)}} definied for a grid of size {{t}} are:
+  * Positions {{{Position(h,b)}}} definied for a grid of size {{{t}}} are:
   *
   * `0 <= h < t`
   * `0 <= b < t`
@@ -27,7 +27,7 @@ final class Hexa[+A](val size: Int, cells: Vector[A]) {
   def get(p: Position): Option[A] =
     offset(p).flatMap(cells.lift(_))
 
-  /** Return a grid where the position {{position}} is {{value}}
+  /** Return a grid where the position {{{position}}} is {{{value}}}
     * (if this position is within the limits of the grid, otherwise return the input grid)
     */
   def set[B >: A](position: Position, value: B): Hexa[B] =
@@ -135,11 +135,11 @@ final class Hexa[+A](val size: Int, cells: Vector[A]) {
 
 object Hexa {
 
-  /** Create an immutable square hexagonal grid of size {{size}} filled with {{value}}*/
+  /** Create an immutable square hexagonal grid of size {{{size}}} filled with {{{value}}} */
   def fill[A](_size: Int)(value: A): Hexa[A] =
     new Hexa[A](_size, Vector.fill(_size * _size)(value))
 
-  /** Create an immutable square hexagonal grid of size {{size}} filled by {{f}}*/
+  /** Create an immutable square hexagonal grid of size {{{size}}} filled by {{{f}}} */
   def tabulate[A](_size: Int)(f: Position => A): Hexa[A] =
     new Hexa[A](_size, Vector.tabulate(_size * _size) { i =>
       f(Position(up = i / _size, down = i % _size))

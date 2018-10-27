@@ -1,10 +1,9 @@
 package object toolbox {
 
-  /** L'opérateur {{x == y}} de Scala est dangereux du fait qu'il autorise {{x}} et {{y}}
-    * à être de types différent, ce qui est souvent le signe d'un bug.
+  /** The operator {{{x == y}}} of Scala is dangerous because it allows {{{x}}} et {{{y}}}
+    * to be of different types, which is often a bug.
     *
-    * Cette classe implicite le remplace par {{{x === y}}} où les deux opérandes doivent
-    * avoir le même type.
+    * This implcit class replaces it by {{{x === y}}} where the two operands must have the same type.
     */
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   implicit final class AnyOps[A](self: A) {

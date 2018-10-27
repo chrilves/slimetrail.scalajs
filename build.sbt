@@ -23,7 +23,7 @@ lazy val commonSettings: Seq[sbt.Def.SettingsDefinition] =
     scalacOptions -= "-Ywarn-unused:params",
     wartremoverErrors in (Compile, compile) := warts,
     wartremoverWarnings in (Compile, console) := warts,
-    addCompilerPlugin("io.tryp" % "splain" % "0.3.4" cross CrossVersion.patch),
+    //addCompilerPlugin("io.tryp" % "splain" % "0.3.4" cross CrossVersion.patch),
     addCompilerPlugin("org.spire-math" % "kind-projector" % "0.9.8" cross CrossVersion.binary),
     scalafmtOnCompile := true
   )

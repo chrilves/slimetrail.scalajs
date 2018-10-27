@@ -10,16 +10,16 @@ final case class Point(x: Double, y: Double) {
   val img: Double = y
 
   /** Addition compenent wise of two points/ Addition of complex numbers
-    * {{(x = p1.x + p2.x, y = p1.y + p2.y)}}
+    * {{{(x = p1.x + p2.x, y = p1.y + p2.y)}}}
     */
   def +(p2: Point): Point = Point(x = this.x + p2.x, y = this.y + p2.y)
 
   /** Substraction component wise of two points/ Substraction of complex numbers
-    * {{(x = p1.x - p2.x, y = p1.y - p2.y)}}
+    * {{{(x = p1.x - p2.x, y = p1.y - p2.y)}}}
     */
   def -(p2: Point): Point = Point(x = this.x - p2.x, y = this.y - p2.y)
 
-  /** Vector from {{this}} to {{p2}}
+  /** Vector from {{{this}}} to {{{p2}}}
     */
   def vector(p2: Point): Point = p2 - this
 
@@ -60,7 +60,7 @@ object Point {
   def polar(rayon: Double, angle: Double): Point =
     Point(x = rayon * cos(angle), y = rayon * sin(angle))
 
-  /** Point at a distance of 1 from the origin and at angle {{angle}}*/
+  /** Point at a distance of 1 from the origin and at angle {{{angle}}} */
   def ei(angle: Double): Point = Point(x = cos(angle), y = sin(angle))
 
   /** Conversion from degres to radians*/

@@ -6,4 +6,5 @@
   - [Playing with the Document Object Model (DOM)](./play-with-dom.md)
 - [Introduction to ScalaJS](./scalajs-intro.md)
   - [The Slimetrail Text App](./slimetrail-text-app.md)
+  - [Inviting ScalaJS to the Party](./inviting-scalajs.md)
 - [Virtual DOM](./virtual-dom.md)

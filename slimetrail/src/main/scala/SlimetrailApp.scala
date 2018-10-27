@@ -1,7 +1,7 @@
 package slimetrail
 
 /** Skeleton of Slimetrail applicaton. There is no UI here but
-  * the {{Model}} is defined as a game state and events are
+  * the {{{Model}}} is defined as a game state and events are
   * allowed moves for a game or starting a new game.
   */
 abstract class SlimetrailApp(size: Int) extends Application {

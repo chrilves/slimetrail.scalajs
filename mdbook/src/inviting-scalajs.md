@@ -20,7 +20,7 @@ A large amount of *Scala* libraries are available both as *JVM* and *ScalaJS* ar
 **In** `build.sbt`**, replace any** `%%` **in** `commonSettings` **by** `%%%` **.**
 
 We now need to adapt the `toolbox` and `slimetrail` project definitions to define these as *cross-projects*. To do so:
-
+  
 - **In the** `toolbox`**, project definition, replace** `project` **by:**
 
   ```scala

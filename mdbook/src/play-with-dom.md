@@ -47,7 +47,7 @@ console.log(x);
 ```
 
 ```js
-document.getElementsByTagName("body")[0]
+document.body
         .appendChild(document.createTextNode("Hello"));
 ```
 

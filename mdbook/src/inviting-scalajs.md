@@ -20,7 +20,14 @@ A large amount of *Scala* libraries are available both as *JVM* and *ScalaJS* ar
 **In** `build.sbt`**, replace any** `%%` **in** `commonSettings` **by** `%%%` **.**
 
 We now need to adapt the `toolbox` and `slimetrail` project definitions to define these as *cross-projects*. To do so:
-  
+
+- **At the beginning of** `build.sbt` **add these lines:**
+
+  ```scala
+  // shadow sbt-scalajs' crossProject and CrossType until Scala.js 1.0.0 is released
+  import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
+  ```
+
 - **In the** `toolbox`**, project definition, replace** `project` **by:**
 
   ```scala
@@ -85,8 +92,9 @@ lazy val web =
 ```scala
 package slimetrail.web
 
+import org.scalajs.dom._
+import scala.scalajs.js
 import slimetrail._
-import org.scalajs._
 
 /** Tree strucure to represent the DOM */
 sealed trait Html[+A] {
@@ -125,7 +133,7 @@ final class SlimetrailWebApp(size: Int)
 
 object Main {
   def onLoading(a: => Unit): Unit =
-    dom.document.addEventListener("DOMContentLoaded", (_: Event) => a)
+    document.addEventListener("DOMContentLoaded", (_: Event) => a)
 
   def main(args: Array[String]): Unit =
     onLoading {

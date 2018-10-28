@@ -9,6 +9,9 @@ lazy val warts =
     Wart.NonUnitStatements
   )
 
+lazy val splain: ModuleID = "io.tryp" % "splain" % "0.3.4" cross CrossVersion.patch
+lazy val kindProjector: ModuleID = "org.spire-math" % "kind-projector" % "0.9.8" cross CrossVersion.binary
+
 lazy val commonSettings: Seq[sbt.Def.SettingsDefinition] =
   Seq(
     inThisBuild(
@@ -23,8 +26,9 @@ lazy val commonSettings: Seq[sbt.Def.SettingsDefinition] =
     scalacOptions -= "-Ywarn-unused:params",
     wartremoverErrors in (Compile, compile) := warts,
     wartremoverWarnings in (Compile, console) := warts,
-    //addCompilerPlugin("io.tryp" % "splain" % "0.3.4" cross CrossVersion.patch),
-    addCompilerPlugin("org.spire-math" % "kind-projector" % "0.9.8" cross CrossVersion.binary),
+    libraryDependencies in (Compile, compile) += splain,
+    libraryDependencies in (Compile, console) += splain,
+    addCompilerPlugin(kindProjector),
     scalafmtOnCompile := true
   )
 

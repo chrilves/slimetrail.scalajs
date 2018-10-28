@@ -4,8 +4,8 @@ import html.Html
 import slimetrail._
 import toolbox._
 
-final class SlimetrailWebApp(taille: Int)
-    extends SlimetrailApp(taille)
+final class SlimetrailWebApp(size: Int)
+    extends SlimetrailApp(size)
     with WebApplication {
 
   def view(m: GameState): Html[Msg] = {

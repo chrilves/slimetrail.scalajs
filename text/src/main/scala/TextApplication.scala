@@ -3,7 +3,7 @@ package slimetrail.text
 import scala.annotation._
 import slimetrail._
 
-/** Specialization of an [[Application]] to a text interface.*/
+/** Specialization of an {{{slimetrail.Application}}} to a text interface.*/
 trait TextApplication extends Application { self =>
 
   /** The view must print the current state of the application, given by {{{model}}}

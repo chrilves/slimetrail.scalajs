@@ -168,6 +168,111 @@ One of the most important concept is the [document](https://developer.mozilla.or
   document.body.addEventListener("click", reaction2);
   ```
 
+- By default, *JavaScript* code in a page can be executed before the page is fully loaded. Code that need the page to be fully loaded can set themselves as an event listener on `document` for the [DOMContentLoaded](https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded) event.
+
+  ```js
+  function reaction3(event) {
+    alert("I will be executed when the page is fully loaded");
+  }
+  document.addEventListener("DOMContentLoaded", reaction3);
+  ```
+
 These are the few functions you need to use to create or modify the page structure from *JavaScript*.
 
-  **Keep practicing each of these functions until you feel confident in their use.**
+## Real-Life Application
+
+It is about time to apply all this knowledge into a real-life example. To do so, create a new file named `example.html` whose content is:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+    /* Place here the code that create the svg tree
+       and add it to the page so that the image is
+       displayed by the browser.
+    */
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
+```
+
+**Write within the** `<script ...>` **tag above the *JavaScript* code to create the following complete *Element* and append it to the** `<body>` **node so that the browser displays the image.** This example is taken from the book [SVG Essentials](http://shop.oreilly.com/product/0636920032335.do).
+
+```html
+<svg width="140"
+     height="170"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <title>Cat</title>
+  <desc>Stick Figure of a Cat</desc>
+  
+  <circle cx="70" cy="95" r="50" style="stroke: black; fill: none;"></circle>
+  <circle cx="55" cy="80" r="5" stroke="black" fill="#339933"></circle>
+  <circle cx="85" cy="80" r="5" stroke="black" fill="#339933"></circle>
+  
+  <g id="whiskers">
+    <line x1="75" y1="95" x2="135" y2="85" style="stroke: black;"></line>
+    <line x1="75" y1="95" x2="135" y2="105" style="stroke: black;"></line>
+  </g>
+
+  <use xlink:href="#whiskers" transform="scale(-1 1) translate(-140 0)"></use>
+  
+  <polyline points="108 62, 90 10, 70 45, 50, 10, 32, 62"
+            style="stroke: black; fill: none;">
+  </polyline>
+
+  <polyline points="35 110, 45 120, 95 120, 105, 110"
+            style="stroke: black; fill: none;">
+  </polyline>
+</svg>
+```
+
+**Open the page in the browser, the inspector should be similar to:**
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+    /* Your Javascript code to create the following
+       svg element should be here
+    */
+    </script>
+  </head>
+  <body>
+    <svg width="140"
+         height="170"
+         xmlns="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+
+      <title>Cat</title>
+      <desc>Stick Figure of a Cat</desc>
+
+      <circle cx="70" cy="95" r="50" style="stroke: black; fill: none;"></circle>
+      <circle cx="55" cy="80" r="5" stroke="black" fill="#339933"></circle>
+      <circle cx="85" cy="80" r="5" stroke="black" fill="#339933"></circle>
+
+      <g id="whiskers">
+        <line x1="75" y1="95" x2="135" y2="85" style="stroke: black;"></line>
+        <line x1="75" y1="95" x2="135" y2="105" style="stroke: black;"></line>
+      </g>
+
+      <use xlink:href="#whiskers" transform="scale(-1 1) translate(-140 0)"></use>
+
+      <polyline points="108 62, 90 10, 70 45, 50, 10, 32, 62"
+                style="stroke: black; fill: none;">
+      </polyline>
+
+      <polyline points="35 110, 45 120, 95 120, 105, 110"
+                style="stroke: black; fill: none;">
+      </polyline>
+    </svg>
+  </body>
+</html>
+```

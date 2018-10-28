@@ -15,7 +15,7 @@ trait WebApplication extends Application { self =>
   /** Run a Web Application on a given node
     *
     * The principle is simple:
-    *  - Just like any [[Application]], at any given time there is a
+    *  - Just like any {{{Application}}}, at any given time there is a
     *    "current model" which is the state of the application, a value of type [[Model]].
     *  - The function [[view]] compute the Html tree corresponding the current value of the model.
     *  - This tree enables building a Node of the DOM

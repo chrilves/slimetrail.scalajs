@@ -7,4 +7,3 @@
 - [Introduction to ScalaJS](./scalajs-intro.md)
   - [The Slimetrail Text App](./slimetrail-text-app.md)
   - [Inviting ScalaJS to the Party](./inviting-scalajs.md)
-- [Virtual DOM](./virtual-dom.md)

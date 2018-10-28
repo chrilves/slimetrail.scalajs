@@ -49,7 +49,7 @@ We now need to adapt the `toolbox` and `slimetrail` project definitions to defin
   lazy val slimetrailJVM = slimetrail.jvm
   ```
 
-- **In the** `text`**, project definition, replace** `slimetrailJVM` **by** `slimetrailJVM` **.**
+- **In the** `text`**, project definition, replace** `slimetrail` **by** `slimetrailJVM` **.**
 
 `toolbox` and `slimetrail` projects now exists in two flavors each:
 

@@ -1,5 +1,8 @@
 # Slimetrail
 
+- **Recommended time to spend on this part: 5 minutes**
+- **Recommended finishing before: 9:05am**
+
 *Sliletrail* is a **two-players** **turn-based** board game. At the beginning of the game the board looks like this:
 
 ![Initial board](./images/board0.svg "Initial board")

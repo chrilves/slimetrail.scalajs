@@ -1,5 +1,8 @@
 # The Slimetrail Text App
 
+- **Recommended time to spend on this part: 5 minutes**
+- **Recommended finishing before: 10:00am**
+
 A text interface similar to the web one you used to far has been realized. To get it clone the following [git](https://git-scm.com/) repository:
 
 ```sh
@@ -22,7 +25,18 @@ The project is divided into three *sbt modules*:
 
 Note that `text` does not include any game logic and `slimetail` does not include any interface code. This strict **isolation** is crucial to make things work.
 
+**Run the following commands to generate the scaladoc for the** `text`, `slimetrail` **and** `text` **projects.**
+
+- `sbt toolbox\doc`
+- `sbt slimetrail\doc`
+- `sbt text\doc`
+
+**Now open the generated documentations in your browser.**
+
 ## The Game Loop
+
+- **Recommended time to spend on this part: 10 minutes**
+- **Recommended finishing before: 10:10am**
 
 The execution of the game follows a simple and widespread technique:
 

@@ -8,10 +8,13 @@ The bottom half of the screen is [the Web Developer Tools](https://developer.moz
 
 ## The **Inspector** panel
 
+- **Recommended time to spend on this part: 10 minutes**
+- **Recommended finishing before: 9:15am**
+
 The **inspector** shows you the *HTLM/CSS/SVG* code of the page **in real time**. *JavaScript* code can modify the *HTLM/CSS/SVG* code of the page through an *API* (Application Programming Interface) known as the [Document Object Model](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) or **DOM** for short.
 
 - **Play the game and watch the code of the page being modified as you play.**
-- **Write down 10 modifications of the code you noticed.**
+- **Write down 10 modifications of the tree you noticed.**
 
 Within the *inspector* you can explore the structure of the document, but also modify it and even copying it.
 
@@ -24,6 +27,9 @@ Within the *inspector* you can explore the structure of the document, but also m
 During this session, use the *inspector* **often** either to inspect a working example like the one at [chrilves.github.io/slimetrail](https://chrilves.github.io/slimetrail), or as a *REPL* by writing down *HTML/CSS/SVG* or as a debugger.
 
 ## The **console** panel
+
+- **Recommended time to spend on this part: 30 minutes**
+- **Recommended finishing before: 9:45am**
 
 The **console** panel is a *JavaScript* [REPL](https://en.wikipedia.org/wiki/Read–eval–print_loop). Enter the following *JavaScript* code and watch the effects on the page:
 
@@ -181,6 +187,9 @@ These are the few functions you need to use to create or modify the page structu
 
 ## Real-Life Application
 
+- **Recommended time to spend on this part: 10 minutes**
+- **Recommended finishing before: 9:55am**
+
 It is about time to apply all this knowledge into a real-life example. To do so, create a new file named `example.html` whose content is:
 
 ```html
@@ -232,7 +241,7 @@ It is about time to apply all this knowledge into a real-life example. To do so,
 </svg>
 ```
 
-**Open the page in the browser, the inspector should be similar to:**
+Open the page in the browser, the inspector should be similar to:
 
 ```html
 <!DOCTYPE html>

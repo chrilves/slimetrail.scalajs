@@ -4,6 +4,9 @@ For now *Slimetrail* is a plain old *JVM-only* project. We need to make it able 
 
 ## Cross-projectization
 
+- **Recommended time to spend on this part: 5 minutes**
+- **Recommended finishing before: 10:15am**
+
 **Add the following lines to** `project/plugins.sbt` **.**
 
 ```scala
@@ -56,6 +59,9 @@ We now need to adapt the `toolbox` and `slimetrail` project definitions to defin
 **Run** `sbt text/run` **to ensure everything is still working fine.**
 
 ## Setting up the Web UI
+
+- **Recommended time to spend on this part: 5 minutes**
+- **Recommended finishing before: 10:20am**
 
 **Add the new project definition for the Web UI:**
 
@@ -144,6 +150,11 @@ To produce the *JavaScript* you have two options:
 Run `bin/genHtml.sh` to produce both `fast.html` and `full.html` which run the application using the corresponding *JavaScript* file.
 
 ## Implementing the Web UI
+
+- **Recommended time to spend on this part: 1 hour and 40 minutes**
+- **Recommended finishing before: 12:00am**
+
+Using the [ScalaJS library scaladoc](https://www.scala-js.org/api/scalajs-library/latest/#scala.scalajs.js.package) and [ScalaJS DOM scaladoc](https://www.scala-js.org/api/scalajs-dom/0.9.5/#org.scalajs.dom.package) you can now finish the *Web UI* by implementing the following functions:
 
 - **(Optional) Implements** `Html.map` **.**
 

@@ -29,9 +29,11 @@ trait ApplicationWebElm extends ApplicationElm { self =>
 
       val nouveauNoeud: Node =
         if (useDifference)
-          Rendu.difference(parent,
-                           Rendu.Entree(etat.vue, etat.noeud),
-                           nouvelleVue)
+          Rendu.difference(
+            parent,
+            Rendu.Entree(etat.vue, etat.noeud),
+            nouvelleVue
+          )
         else {
           val n = Rendu.dessiner(nouvelleVue)
           parent.replaceChild(n, ancienNoeud)

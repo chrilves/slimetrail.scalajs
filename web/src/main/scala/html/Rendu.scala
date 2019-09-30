@@ -73,7 +73,7 @@ object Rendu {
       anciens_attributs: Map[Attribut.Clef, Attribut.Valeur],
       anciennes_reactions: Seq[Reaction[Unit]],
       nouveaux_attributs: Map[Attribut.Clef, Attribut.Valeur],
-      nouvelles_reactions: Seq[Reaction[Unit]],
+      nouvelles_reactions: Seq[Reaction[Unit]]
   ): Unit = {
     log(s"[actualiserNoeud] noeud=${noeud.outerHTML}")
 
@@ -107,7 +107,8 @@ object Rendu {
             ()
           case Some(_) =>
             log(
-              s"""[actualiserNoeud]  - Définition jour de l'attribut $clef="${valeur}"""")
+              s"""[actualiserNoeud]  - Définition jour de l'attribut $clef="${valeur}""""
+            )
             noeud.setAttributeNS(ns.map(_.valeur).getOrElse(null), clef, valeur)
         }
     }
@@ -140,14 +141,16 @@ object Rendu {
         ancien match {
           case Entree(
               Noeud(a_espace, a_balise, a_attrs, a_reactions, anciens_enfants),
-              ancien_element: dom.raw.Element)
-              if a_balise === balise && a_espace === espace =>
+              ancien_element: dom.raw.Element
+              ) if a_balise === balise && a_espace === espace =>
             log(s"[difference] même noeud element")
-            actualiserNoeud(ancien_element,
-                            a_attrs,
-                            a_reactions,
-                            attributs,
-                            reactions)
+            actualiserNoeud(
+              ancien_element,
+              a_attrs,
+              a_reactions,
+              attributs,
+              reactions
+            )
 
             val anciennes_entrees: Array[Entree] =
               anciens_enfants.toArray
@@ -159,8 +162,10 @@ object Rendu {
 
             val diffs: List[Diff[Entree, Html[Unit]]] =
               Diff
-                .myers(memeNature _)(anciennes_entrees,
-                                     nouveaux_enfants.toArray)
+                .myers(memeNature _)(
+                  anciennes_entrees,
+                  nouveaux_enfants.toArray
+                )
                 ._2
 
             anciennes_entrees.zipWithIndex.foreach {
@@ -181,8 +186,10 @@ object Rendu {
             import Diff._
 
             @scala.annotation.tailrec
-            def appliquer(dernier: Option[Node],
-                          l: List[Diff[Entree, Html[Unit]]]): Unit =
+            def appliquer(
+                dernier: Option[Node],
+                l: List[Diff[Entree, Html[Unit]]]
+            ): Unit =
               l match {
                 case Nil =>
                   ()

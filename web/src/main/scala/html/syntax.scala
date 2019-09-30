@@ -15,10 +15,12 @@ object syntax {
     final case object Nop extends Parametre[Nothing]
   }
 
-  type FaitNoeud[A] = (Parametre[A]*) => (Html[A]*) => Noeud[A]
-
-  def noeud_[A](espaceDeNom: Namespace, balise: String)(ar: Seq[Parametre[A]])(
-      e: Seq[Html[A]]): Noeud[A] = {
+  def noeud_[A](
+      espaceDeNom: Namespace,
+      balise: String,
+      ar: Seq[Parametre[A]],
+      e: Seq[Html[A]]
+  ): Noeud[A] = {
     val attributs: Map[Attribut.Clef, Attribut.Valeur] =
       ar.flatMap {
         case Parametre.Attr(cd) => List(cd)
@@ -34,33 +36,53 @@ object syntax {
     Noeud(espaceDeNom, balise, attributs, reactions, e)
   }
   @inline
-  def noeud[A](balise: String,
-               espaceDeNom: Namespace = Namespace.HTML): FaitNoeud[A] =
-    noeud_(espaceDeNom, balise) _
+  def noeud[A](
+      balise: String,
+      espaceDeNom: Namespace = Namespace.HTML
+  )(ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud_(espaceDeNom, balise, ar, e)
 
-  def div[A]: FaitNoeud[A] = noeud[A]("div")
-  def span[A]: FaitNoeud[A] = noeud[A]("span")
-  def a[A]: FaitNoeud[A] = noeud[A]("a")
+  @inline def div[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("div")(ar: _*)(e: _*)
+  @inline def span[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("span")(ar: _*)(e: _*)
+  @inline def a[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("a")(ar: _*)(e: _*)
 
-  def p[A]: FaitNoeud[A] = noeud[A]("p")
-  def texte(s: String): Texte = Texte(s)
+  def p[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("p")(ar: _*)(e: _*)
+  def texte(s: String): Texte =
+    Texte(s)
 
-  def ul[A]: FaitNoeud[A] = noeud[A]("ul")
-  def li[A]: FaitNoeud[A] = noeud[A]("li")
+  def ul[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("ul")(ar: _*)(e: _*)
+  def li[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("li")(ar: _*)(e: _*)
+  def input[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("input")(ar: _*)(e: _*)
+  def button[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("button")(ar: _*)(e: _*)
 
-  def input[A]: FaitNoeud[A] = noeud[A]("input")
-  def button[A]: FaitNoeud[A] = noeud[A]("button")
-
-  def svg[A]: FaitNoeud[A] = noeud[A]("svg", Namespace.SVG)
-  def rect[A]: FaitNoeud[A] = noeud[A]("rect", Namespace.SVG)
-  def polyline[A]: FaitNoeud[A] = noeud[A]("polyline", Namespace.SVG)
-  def polygon[A]: FaitNoeud[A] = noeud[A]("polygon", Namespace.SVG)
-  def symbol[A]: FaitNoeud[A] = noeud[A]("symbol", Namespace.SVG)
-  def g[A]: FaitNoeud[A] = noeud[A]("g", Namespace.SVG)
-  def defs[A]: FaitNoeud[A] = noeud[A]("defs", Namespace.SVG)
-  def use[A]: FaitNoeud[A] = noeud[A]("use", Namespace.SVG)
-  def text[A]: FaitNoeud[A] = noeud[A]("text", Namespace.SVG)
-  def line[A]: FaitNoeud[A] = noeud[A]("line", Namespace.SVG)
+  def svg[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("svg", Namespace.SVG)(ar: _*)(e: _*)
+  def rect[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("rect", Namespace.SVG)(ar: _*)(e: _*)
+  def polyline[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("polyline", Namespace.SVG)(ar: _*)(e: _*)
+  def polygon[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("polygon", Namespace.SVG)(ar: _*)(e: _*)
+  def symbol[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("symbol", Namespace.SVG)(ar: _*)(e: _*)
+  def g[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("g", Namespace.SVG)(ar: _*)(e: _*)
+  def defs[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("defs", Namespace.SVG)(ar: _*)(e: _*)
+  def use[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("use", Namespace.SVG)(ar: _*)(e: _*)
+  def text[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("text", Namespace.SVG)(ar: _*)(e: _*)
+  def line[A](ar: Parametre[A]*)(e: Html[A]*): Noeud[A] =
+    noeud[A]("line", Namespace.SVG)(ar: _*)(e: _*)
 
   val nop: Parametre[Nothing] = Parametre.Nop
 

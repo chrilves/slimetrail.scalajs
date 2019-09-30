@@ -62,9 +62,12 @@ final class AppliWebSlimetrail(taille: Int)
     val cheminDesCoups: List[Html[Msg]] = {
       val acc =
         m.historique.foldLeft(
-          (Partie.coordonnees(m.positionDeDepart),
-           Joueur.Premier: Joueur,
-           Nil: List[Html[Msg]])) {
+          (
+            Partie.coordonnees(m.positionDeDepart),
+            Joueur.Premier: Joueur,
+            Nil: List[Html[Msg]]
+          )
+        ) {
           case ((p1, j, acc), coup) =>
             val laclasse: String =
               j match {
@@ -95,14 +98,18 @@ final class AppliWebSlimetrail(taille: Int)
       if (!m.enCours) onclick(NouvellePartie: Msg) else nop
     )(
       g(id("plateau"), transform("scale(1,-1)"))(
-        symbol(id("hexagon"),
-               x("-1"),
-               y("-1"),
-               width("2"),
-               height("2"),
-               viewBox("-1 -1 2 2"))(
-          polygon(style("stroke:black;"),
-                  points(Point.hexagonRayon1Centre0.mkString(" ")))()
+        symbol(
+          id("hexagon"),
+          x("-1"),
+          y("-1"),
+          width("2"),
+          height("2"),
+          viewBox("-1 -1 2 2")
+        )(
+          polygon(
+            style("stroke:black;"),
+            points(Point.hexagonRayon1Centre0.mkString(" "))
+          )()
         ),
         g(id("hexagones"))(hexagons: _*),
         g(id("chemin"))(cheminDesCoups: _*)
@@ -113,7 +120,8 @@ final class AppliWebSlimetrail(taille: Int)
           y(s"${-0.8 * m.demiHauteur}"),
           style(s"font-size: ${m.taille}%;"),
           `class`("titre")
-        )(texte("Slimetrail")))
+        )(texte("Slimetrail"))
+      )
     )
   }
 }

@@ -1,11 +1,8 @@
-// Environnement
-addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.1")
-addSbtPlugin("org.ensime" % "sbt-ensime" % "2.5.1")
-
 // Développement
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.2.1")
-addSbtPlugin("com.geirsson" % "sbt-scalafmt" % "1.5.1")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.4.3")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.0.6")
+addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.8")
 
 // ScalaJS
-addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "0.4.0")
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.23")
+addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "0.6.1")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.29")

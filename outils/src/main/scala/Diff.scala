@@ -65,10 +65,11 @@ object Diff {
     * "CHIEN" pour obtenir "NICHE"
     */
   @SuppressWarnings(
-    Array("org.wartremover.warts.Var", "org.wartremover.warts.TraversableOps"))
-  def apply[A, B](eq: (A, B) => Boolean)(
-      a1: List[A],
-      a2: List[B]): (Int, List[Diff[A, B]]) = {
+    Array("org.wartremover.warts.Var", "org.wartremover.warts.TraversableOps")
+  )
+  def apply[A, B](
+      eq: (A, B) => Boolean
+  )(a1: List[A], a2: List[B]): (Int, List[Diff[A, B]]) = {
     type Q = (Int, List[Diff[A, B]])
     type T = Array[Q]
 
@@ -129,9 +130,9 @@ object Diff {
     * pour calculer ce que supprimer, garder, remplacer ou ajouter de/dans
     * "CHIEN" pour obtenir "NICHE"
     */
-  def myers[A, B](eq: (A, B) => Boolean)(
-      l: Array[A],
-      r: Array[B]): (Int, List[Diff[A, B]]) = {
+  def myers[A, B](
+      eq: (A, B) => Boolean
+  )(l: Array[A], r: Array[B]): (Int, List[Diff[A, B]]) = {
     import scala.annotation._
 
     type D = List[Diff[A, B]]
@@ -148,11 +149,13 @@ object Diff {
           @inline def offset(i: Int): Int = i + vmax
 
           @inline def apply(k: Int): (Int, D) =
-            _v(offset(k)).logCa(x =>
-              s"    v.get($k)=${x._1},${x._1 - k} ${logDiffs(x._2)}")
+            _v(offset(k)).logCa(
+              x => s"    v.get($k)=${x._1},${x._1 - k} ${logDiffs(x._2)}"
+            )
           @inline def update(k: Int, a: (Int, D)): Unit =
-            _v(offset(k)) = a.logCa(x =>
-              s"    v.set($k)=${x._1},${x._1 - k} ${logDiffs(x._2)}")
+            _v(offset(k)) = a.logCa(
+              x => s"    v.set($k)=${x._1},${x._1 - k} ${logDiffs(x._2)}"
+            )
         }
 
         // Initialisation
@@ -180,11 +183,16 @@ object Diff {
 
               val (x, p, suppr) =
                 if (k == -d || ((k != d) && v(k - 1)._1 < v(k + 1)._1))
-                  v(k + 1) match { case (_x, _p) => (_x, _p, false) } else
-                  v(k - 1) match { case (_x, _p) => (_x + 1, _p, true) }
+                  v(k + 1) match {
+                    case (_x, _p) => (_x, _p, false)
+                  } else
+                  v(k - 1) match {
+                    case (_x, _p) => (_x + 1, _p, true)
+                  }
 
               log(
-                s"    x,y=$x,${y(x)} ${if (suppr) "-/x" else "+/y"} ${logDiffs(p)}")
+                s"    x,y=$x,${y(x)} ${if (suppr) "-/x" else "+/y"} ${logDiffs(p)}"
+              )
 
               if (x > nl || y(x) > nr) auxK(k + 2)
               else {

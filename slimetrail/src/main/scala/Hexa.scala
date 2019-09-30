@@ -67,7 +67,8 @@ final class Hexa[+A](val taille: Int, cells: Vector[A]) {
     @tailrec
     def rec(added: Set[Position], toVisit: List[Position]): Boolean = {
       log(
-        s"[Hexa.atteignabePar] added.size=${added.size}, toVisit.taille=${toVisit.size}, toVisit=${toVisit.take(5).mkString(",")}")
+        s"[Hexa.atteignabePar] added.size=${added.size}, toVisit.taille=${toVisit.size}, toVisit=${toVisit.take(5).mkString(",")}"
+      )
       toVisit match {
         case Nil =>
           false
@@ -106,7 +107,8 @@ final class Hexa[+A](val taille: Int, cells: Vector[A]) {
     @tailrec
     def rec(added: Set[Position], toVisit: List[Position]): Set[Position] = {
       log(
-        s"[Hexa.atteignabeDepuis] added.size=${added.size}, toVisit.size=${toVisit.size}, toVisit=${toVisit.take(5).mkString(",")}")
+        s"[Hexa.atteignabeDepuis] added.size=${added.size}, toVisit.size=${toVisit.size}, toVisit=${toVisit.take(5).mkString(",")}"
+      )
       toVisit match {
         case Nil =>
           added

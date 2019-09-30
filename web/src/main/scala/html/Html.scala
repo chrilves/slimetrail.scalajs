@@ -9,8 +9,10 @@ object Attribut {
   final case class Namespace(valeur: String) extends AnyVal
 }
 
-final case class Reaction[+A](`type`: String,
-                              reaction: js.Function1[_ <: Event, A]) {
+final case class Reaction[+A](
+    `type`: String,
+    reaction: js.Function1[_ <: Event, A]
+) {
   def map[B](f: A => B): Reaction[B] =
     Reaction(`type`, reaction.andThen(f))
 

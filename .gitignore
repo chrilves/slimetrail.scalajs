@@ -5,3 +5,4 @@ target/
 .jvm/
 fast.html
 full.html
+.idea/

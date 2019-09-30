@@ -80,7 +80,8 @@ final class AppliTexteSlimetrail(taille: Int)
       @scala.annotation.tailrec
       def litPosition(): Msg = {
         print(
-          s"""\n${joueur.capitalize}, entez la position "ligne,colonne" d'un coup valide ($couleurDeCoupsValide) : """)
+          s"""\n${joueur.capitalize}, entez la position "ligne,colonne" d'un coup valide ($couleurDeCoupsValide) : """
+        )
         val str = scala.io.StdIn.readLine()
 
         val posOpt: Option[Position] =
@@ -96,7 +97,8 @@ final class AppliTexteSlimetrail(taille: Int)
           case Some(p) => UnCoup(Coup(p))
           case None =>
             println(
-              s"""Ceci n'est pas la position "ligne,colonne" d'un coup valide ($couleurDeCoupsValide).""")
+              s"""Ceci n'est pas la position "ligne,colonne" d'un coup valide ($couleurDeCoupsValide)."""
+            )
             litPosition()
         }
 
@@ -107,7 +109,7 @@ final class AppliTexteSlimetrail(taille: Int)
     } else {
       // La partie est en cours
       val invitePartieFinie
-        : String = s"Bravo $joueur, vous venez de remporter la partie!" ++
+          : String = s"Bravo $joueur, vous venez de remporter la partie!" ++
         s"\n\nEntrez n'importe quelle touche pour démarrer une nouvelle partie."
       print(invitePartieFinie)
       scala.io.StdIn.readLine()

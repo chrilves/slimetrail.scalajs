@@ -29,7 +29,8 @@ final class SlimetrailWebApp(size: Int)
           | .current-position { fill: #a00;}
           |
           | .title { stroke: none; fill: white; }
-        """.stripMargin))
+        """.stripMargin)
+      )
 
     val allowedMoves: Set[Position] = m.allowedMoves.keySet
 
@@ -81,9 +82,12 @@ final class SlimetrailWebApp(size: Int)
     val cheminDesCoups: List[Html[Msg]] = {
       val acc =
         m.history.foldLeft(
-          (GameState.coordinates(m.startingPosition),
-           Player.First: Player,
-           Nil: List[Html[Msg]])) {
+          (
+            GameState.coordinates(m.startingPosition),
+            Player.First: Player,
+            Nil: List[Html[Msg]]
+          )
+        ) {
           case ((p1, j, acc), coup) =>
             val laclasse: String =
               j match {
@@ -122,14 +126,18 @@ final class SlimetrailWebApp(size: Int)
     )(
       theStyle,
       g(id("board"), transform("scale(1,-1)"))(
-        symbol(id("hexagon"),
-               x("-1"),
-               y("-1"),
-               width("2"),
-               height("2"),
-               viewBox("-1 -1 2 2"))(
-          polygon(style("stroke:black;"),
-                  points(Point.hexagonRadius1AtOrigin.mkString(" ")))()
+        symbol(
+          id("hexagon"),
+          x("-1"),
+          y("-1"),
+          width("2"),
+          height("2"),
+          viewBox("-1 -1 2 2")
+        )(
+          polygon(
+            style("stroke:black;"),
+            points(Point.hexagonRadius1AtOrigin.mkString(" "))
+          )()
         ),
         g(id("hexagons"))(hexagons: _*),
         g(id("path"))(cheminDesCoups: _*)
@@ -140,7 +148,8 @@ final class SlimetrailWebApp(size: Int)
           y(s"${-0.8 * m.halfHeigh}"),
           style(s"font-size: ${m.size}%;"),
           `class`("title")
-        )(text("Slimetrail")))
+        )(text("Slimetrail"))
+      )
     )
   }
 }

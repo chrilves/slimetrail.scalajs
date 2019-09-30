@@ -1,29 +1,33 @@
 // shadow sbt-scalajs' crossProject and CrossType until Scala.js 1.0.0 is released
 import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
-// see http://www.wartremover.org/
-lazy val warts =
+// voir http://www.wartremover.org/
+lazy val warts = {
+  import Wart._
   Warts.allBut(
-    Wart.Nothing,
-    Wart.Recursion,
-    Wart.NonUnitStatements
+    Nothing,
+    //ImplicitConversion,
+    Recursion,
+    NonUnitStatements,
+    //MutableDataStructures,
+    StringPlusAny
   )
+}
 
-lazy val splain: ModuleID = "io.tryp" % "splain" % "0.3.4" cross CrossVersion.patch
-lazy val kindProjector: ModuleID = "org.spire-math" % "kind-projector" % "0.9.8" cross CrossVersion.binary
+lazy val splain: ModuleID = "io.tryp" % "splain" % "0.4.1" cross CrossVersion.patch
+lazy val kindProjector: ModuleID = "org.typelevel" % "kind-projector" % "0.10.3" cross CrossVersion.binary
 
 lazy val commonSettings: Seq[sbt.Def.SettingsDefinition] =
   Seq(
     inThisBuild(
       List(
         organization := "chrilves",
-        scalaVersion := "2.12.7",
+        scalaVersion := "2.13.0",
         version := "0.1.0-SNAPSHOT"
       )),
     updateOptions := updateOptions.value.withCachedResolution(true),
-    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.5" % Test,
-    scalacOptions in (Compile, console) -= "-Xfatal-warnings",
-    scalacOptions -= "-Ywarn-unused:params",
+    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.8" % Test,
+    scalacOptions /*in (Compile, console)*/ -= "-Xfatal-warnings",
     wartremoverErrors in (Compile, compile) := warts,
     wartremoverWarnings in (Compile, console) := warts,
     libraryDependencies in (Compile, compile) += splain,
@@ -71,7 +75,7 @@ lazy val web =
     .settings(commonSettings: _*)
     .settings(
       name := "slimetrail-web",
-      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.6",
+      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.7",
       scalaJSUseMainModuleInitializer := true
     )
     .dependsOn(slimetrailJS)

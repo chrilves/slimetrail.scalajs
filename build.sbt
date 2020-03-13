@@ -14,7 +14,7 @@ lazy val warts = {
   )
 }
 
-lazy val splain: ModuleID = "io.tryp" % "splain" % "0.4.1" cross CrossVersion.patch
+lazy val splain: ModuleID = "io.tryp" % "splain" % "0.5.1" cross CrossVersion.patch
 lazy val kindProjector: ModuleID = "org.typelevel" % "kind-projector" % "0.10.3" cross CrossVersion.binary
 
 lazy val commonSettings: Seq[sbt.Def.SettingsDefinition] =
@@ -22,11 +22,11 @@ lazy val commonSettings: Seq[sbt.Def.SettingsDefinition] =
     inThisBuild(
       List(
         organization := "chrilves",
-        scalaVersion := "2.13.0",
+        scalaVersion := "2.13.1",
         version := "0.1.0-SNAPSHOT"
       )),
     updateOptions := updateOptions.value.withCachedResolution(true),
-    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.8" % Test,
+    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.1" % Test,
     scalacOptions /*in (Compile, console)*/ -= "-Xfatal-warnings",
     wartremoverErrors in (Compile, compile) := warts,
     wartremoverWarnings in (Compile, console) := warts,
@@ -75,7 +75,7 @@ lazy val web =
     .settings(commonSettings: _*)
     .settings(
       name := "slimetrail-web",
-      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.7",
+      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "1.0.0",
       scalaJSUseMainModuleInitializer := true
     )
     .dependsOn(slimetrailJS)

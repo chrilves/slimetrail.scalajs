@@ -53,7 +53,8 @@ final class Hexa[+A](val size: Int, cells: Vector[A]) {
   override def toString =
     s"""{
     |${indexedMap {
-         case (p, a) => s"  (${p.up},${p.down})\t-> $a"
+         case (p, a) =>
+           s"  (${p.up.toString},${p.down.toString})\t-> ${a.toString}"
        }.toVector.mkString("\n")}
     |}""".stripMargin
 
@@ -67,7 +68,8 @@ final class Hexa[+A](val size: Int, cells: Vector[A]) {
     @tailrec
     def rec(added: Set[Position], toVisit: List[Position]): Boolean = {
       log(
-        s"[Hexa.atteignabePar] added.size=${added.size}, toVisit.taille=${toVisit.size}, toVisit=${toVisit.take(5).mkString(",")}")
+        s"[Hexa.atteignabePar] added.size=${added.size.toString}, toVisit.taille=${toVisit.size.toString}, toVisit=${toVisit.take(5).mkString(",")}"
+      )
       toVisit match {
         case Nil =>
           false
@@ -81,10 +83,14 @@ final class Hexa[+A](val size: Int, cells: Vector[A]) {
                 .filter { p2 =>
                   get(p2) match {
                     case Some(a) =>
-                      log(s"[Hexa.atteignabePar] grille[$p2]=$a")
+                      log(
+                        s"[Hexa.atteignabePar] grille[${p2.toString}]=${a.toString}"
+                      )
                       !added.contains(p2) && predicate(p2, a)
                     case None =>
-                      log(s"[Hexa.atteignabePar] grille[$p2] n'existe pas.")
+                      log(
+                        s"[Hexa.atteignabePar] grille[${p2.toString}] n'existe pas."
+                      )
                       false
                   }
                 }
@@ -106,7 +112,8 @@ final class Hexa[+A](val size: Int, cells: Vector[A]) {
     @tailrec
     def rec(added: Set[Position], toVisit: List[Position]): Set[Position] = {
       log(
-        s"[Hexa.atteignabeDepuis] added.size=${added.size}, toVisit.size=${toVisit.size}, toVisit=${toVisit.take(5).mkString(",")}")
+        s"[Hexa.atteignabeDepuis] added.size=${added.size.toString}, toVisit.size=${toVisit.size.toString}, toVisit=${toVisit.take(5).mkString(",")}"
+      )
       toVisit match {
         case Nil =>
           added
@@ -117,10 +124,14 @@ final class Hexa[+A](val size: Int, cells: Vector[A]) {
               .filter { p2 =>
                 get(p2) match {
                   case Some(a) =>
-                    log(s"[Hexa.atteignabeDepuis] grille[$p2]=$a")
+                    log(
+                      s"[Hexa.atteignabeDepuis] grille[${p2.toString}]=${a.toString}"
+                    )
                     !added.contains(p2) && predicate(p2, a)
                   case None =>
-                    log(s"[Hexa.atteignabeDepuis] grille[$p2] n'existe pas.")
+                    log(
+                      s"[Hexa.atteignabeDepuis] grille[${p2.toString}] n'existe pas."
+                    )
                     false
                 }
               }

@@ -47,7 +47,7 @@ final case class Point(x: Double, y: Double) {
   /** Conjugate of a complex number*/
   def conj: Point = Point(x = this.x, y = -this.y)
 
-  override def toString = s"$x,$y"
+  override def toString = s"${x.toString},${y.toString}"
 }
 
 object Point {

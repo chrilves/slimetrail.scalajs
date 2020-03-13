@@ -47,13 +47,13 @@ final class SlimetrailTextApp(size: Int)
         ("-" * (3 * m.size)) ++
         "\n   |" ++
         indices.map { i =>
-          s"$i".padTo(2, ' ') ++ "|"
+          s"${i.toString}".padTo(2, ' ') ++ "|"
         }.mkString ++
         "\n" ++
         hline
 
     def line(i: Int): String =
-      "|" ++ s"$i".padTo(2, ' ') ++ "|" ++
+      "|" ++ s"${i.toString}".padTo(2, ' ') ++ "|" ++
         (for {
           j <- indices
           s <- hexagons.get(Position(i, j)).toList
@@ -80,7 +80,8 @@ final class SlimetrailTextApp(size: Int)
       @scala.annotation.tailrec
       def readPosition(): Msg = {
         print(
-          s"""\n${player.capitalize}, please enter the position "row,column" of allowed move ($colorOfAllowedMoves) : """)
+          s"""\n${player.capitalize}, please enter the position "row,column" of allowed move ($colorOfAllowedMoves) : """
+        )
         val str = scala.io.StdIn.readLine()
 
         val posOpt: Option[Position] =
@@ -96,7 +97,8 @@ final class SlimetrailTextApp(size: Int)
           case Some(p) => Action.AMove(Move(p))
           case None =>
             println(
-              s"""Sorry but this is not the position "row,column" of an allowed move ($colorOfAllowedMoves).""")
+              s"""Sorry but this is not the position "row,column" of an allowed move ($colorOfAllowedMoves)."""
+            )
             readPosition()
         }
 
@@ -107,7 +109,7 @@ final class SlimetrailTextApp(size: Int)
     } else {
       // La partie est en cours
       val promptEndGame
-        : String = s"Congratulations $player, you've just won the game!" ++
+          : String = s"Congratulations $player, you've just won the game!" ++
         s"\n\nPress any key to start a new game."
       print(promptEndGame)
       scala.io.StdIn.readLine()

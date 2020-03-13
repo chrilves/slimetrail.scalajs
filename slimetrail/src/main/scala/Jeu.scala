@@ -148,13 +148,13 @@ sealed abstract class GameState { self =>
   override def toString: String =
     s"""
     |====== Partie de Slimetrail ===========
-    |  history=$history
+    |  history=${history.toString}
     |
-    |  turn=$turn
+    |  turn=${turn.toString}
     |
-    |  position=$currentPosition
+    |  position=${currentPosition.toString}
     |
-    |  grid=$grid
+    |  grid=${grid.toString}
     |
     |---------------------------------------
     |""".stripMargin

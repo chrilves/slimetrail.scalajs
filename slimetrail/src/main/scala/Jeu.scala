@@ -2,33 +2,22 @@ package slimetrail
 
 import toolbox._
 
-/** It's a turn-based two-player game.
-  * There is so a first and second player.
+/** It's a turn-based two-player game. There is so a first and second player.
   */
-sealed abstract class Player {
-  import Player._
+enum Player:
+  case First, Second
 
   def next: Player =
-    this match {
+    this match
       case First  => Second
       case Second => First
-    }
-}
 
-object Player {
-  case object First extends Player
-  case object Second extends Player
-}
-
-/** Represents whether a game has been won
-  * and by who or is sill in play and
-  * whose turn it is.
+/** Represents whether a game has been won and by who or is sill in play and whose turn it is.
   */
-sealed abstract class Turn { val player: Player }
-object Turn {
-  final case class TurnTo(player: Player) extends Turn
-  final case class WonBy(player: Player) extends Turn
-}
+enum Turn:
+  val player: Player
+  case TurnTo(player: Player) extends Turn
+  case WonBy(player: Player)  extends Turn
 
 /** Represents a move on a new position.
   */
@@ -56,10 +45,10 @@ sealed abstract class GameState { self =>
 
   final lazy val startingPosition: Position = GameState.startingPosition(size)
 
-  /** The width of the grid (with hexagons cells of radius 1)*/
+  /** The width of the grid (with hexagons cells of radius 1) */
   final lazy val width: Double = 3 * size.toDouble - 1
 
-  /** The half the of the heigh of the grid (with hexagons of radius 1)*/
+  /** The half the of the heigh of the grid (with hexagons of radius 1) */
   final lazy val halfHeigh: Double = size * math.sin(math.Pi * 60 / 180)
 
   final def goal(j: Player): Position =
@@ -90,11 +79,10 @@ sealed abstract class GameState { self =>
     def reacheablePositions(j: Player): Set[Position] =
       grid.reachableFrom(
         goal(j),
-        (p2: Position, c: Cell) =>
-          !c.visited && p2 =/= goal(j.next) && p2 =/= currentPosition
+        (p2: Position, c: Cell) => !c.visited && p2 =/= goal(j.next) && p2 =/= currentPosition
       )
 
-    val positionsFirst = reacheablePositions(First)
+    val positionsFirst  = reacheablePositions(First)
     val positionsSecond = reacheablePositions(Second)
 
     def reachable(j: Player): Set[Position] =
@@ -104,22 +92,21 @@ sealed abstract class GameState { self =>
       }
 
     val m: List[(Position, Option[Player])] =
-      for {
+      for
         p <- currentPosition.neighbors.toList if onGoing
         c <- grid.get(p).toList if !c.visited
         g <- List[Player](First, Second)
-          .filter(j => reachable(j).contains(p)) match {
+          .filter(j => reachable(j).contains(p)) match
           case Nil     => Nil
           case List(j) => List(Some(j))
           case _       => List(None)
-        }
-      } yield (p, g)
+      yield (p, g)
 
     m.toMap
   }
 
-  /** Play a move. If the last one is allowed, return the new game state.
-    * Otherwise return {{[None}}}.
+  /** Play a move. If the last one is allowed, return the new game state. Otherwise return
+    * {{[None}}}.
     */
   final def playAMove(c: Move): Option[GameState] =
     turn match {
@@ -131,10 +118,10 @@ sealed abstract class GameState { self =>
 
         def newGame(t: Turn): GameState =
           new GameState {
-            val grid: Hexa[Cell] = newGrid
+            val grid: Hexa[Cell]          = newGrid
             val currentPosition: Position = c.position
-            val turn: Turn = t
-            val history: Vector[Move] = self.history.:+(c)
+            val turn: Turn                = t
+            val history: Vector[Move]     = self.history.:+(c)
           }
 
         allowedMoves.get(c.position).map { _ =>
@@ -168,21 +155,23 @@ object GameState {
   }
 
   /** Initial state of a game for a given size */
-  def initial(size: Int): GameState = {
-    val theSize = math.max(size, 3)
+  def initial(_size: Int): GameState = {
+    val theSize = math.max(_size, 3)
 
     new GameState {
-      val grid: Hexa[Cell] = Hexa.fill(theSize)(Cell(false))
-      val currentPosition: Position = GameState.startingPosition(size)
-      val turn: Turn = Turn.TurnTo(Player.First)
-      val history: Vector[Move] = Vector.empty
+      val grid: Hexa[Cell]          = Hexa.fill(theSize)(Cell(false))
+      val currentPosition: Position = GameState.startingPosition(_size)
+      val turn: Turn                = Turn.TurnTo(Player.First)
+      val history: Vector[Move]     = Vector.empty
     }
   }
 
-  /** The translation vector from an hexagon of the grid at Position(X,Y) to one at Position(X,Y+1) */
+  /** The translation vector from an hexagon of the grid at Position(X,Y) to one at Position(X,Y+1)
+    */
   val up: Point = Point.polarDeg(math.sqrt(3), 30)
 
-  /** The translation vector from an hexagon of the grid at Position(X,Y) to one at Position(X+1,Y) */
+  /** The translation vector from an hexagon of the grid at Position(X,Y) to one at Position(X+1,Y)
+    */
   val down: Point = Point.polarDeg(math.sqrt(3), -30)
 
   /** Give the point corresponding to the center of the hexagon at the given position. */

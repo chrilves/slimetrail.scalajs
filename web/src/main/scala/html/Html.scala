@@ -1,6 +1,5 @@
 package slimetrail.web.html
 
-import org.scalajs.dom.raw._
 import org.scalajs.dom._
 import scalajs.js
 
@@ -20,7 +19,7 @@ object Attribute {
 /** To be given to addEventListener */
 final case class Reaction[+A](
     `type`: String,
-    reaction: js.Function1[_ <: Event, A]
+    reaction: js.Function1[? <: Event, A]
 ) {
   def map[B](f: A => B): Reaction[B] =
     Reaction(`type`, reaction.andThen(f))
@@ -30,17 +29,17 @@ final case class Reaction[+A](
 sealed abstract class Namespace(val uri: String)
 object Namespace {
   case object HTML extends Namespace("http://www.w3.org/1999/xhtml")
-  case object SVG extends Namespace("http://www.w3.org/2000/svg")
+  case object SVG  extends Namespace("http://www.w3.org/2000/svg")
 }
 
-/** Represents an HTML/SVG tree whose reactions produce values of type A*/
+/** Represents an HTML/SVG tree whose reactions produce values of type A */
 sealed abstract class Html[+A] {
   def map[B](f: A => B): Html[B]
 
   import Html._
 
   /** Draw a DOM node corresponding to this HTML/SVG tree */
-  @SuppressWarnings(Array("org.wartremover.warts.Null"))
+  @SuppressWarnings(Array("org.wartremover.warts.Null", "org.wartremover.warts.GetOrElseNull"))
   final def draw: Node =
     this match {
       case Text(s) =>
@@ -49,14 +48,12 @@ sealed abstract class Html[+A] {
       case Tag(namespace, tag, attributes, reactions, children) =>
         val b: Element = document.createElementNS(namespace.uri, tag)
 
-        attributes.foreach {
-          case (Attribute.Key(clef, ns), Attribute.Value(valeur)) =>
-            b.setAttributeNS(ns.map(_.value).getOrElse(null), clef, valeur)
+        attributes.foreach { case (Attribute.Key(clef, ns), Attribute.Value(valeur)) =>
+          b.setAttributeNS(ns.map(_.value).getOrElse(null), clef, valeur)
         }
 
-        reactions.foreach {
-          case Reaction(t, r) =>
-            b.addEventListener(t, r, false)
+        reactions.foreach { case Reaction(t, r) =>
+          b.addEventListener(t, r, false)
         }
 
         children.foreach { children =>
@@ -72,7 +69,7 @@ object Html {
   /** Represents a texte node */
   final case class Text(value: String) extends Html[Nothing] {
     def map[B](f: Nothing => B): Html[B] = this
-    override def toString: String = value
+    override def toString: String        = value
   }
 
   /** Represents a tag node */

@@ -4,7 +4,8 @@ import org.scalajs.dom
 import org.scalajs.dom._
 import dom.document
 
-object Main {
+object Main:
+  @SuppressWarnings(Array("org.wartremover.warts.Any"))
   def onLoading(a: => Unit): Unit =
     dom.document.addEventListener("DOMContentLoaded", (_: Event) => a)
 
@@ -13,4 +14,3 @@ object Main {
       new SlimetrailWebApp(10)
         .run(document.getElementById("scalajs-controlled-node"))
     }
-}

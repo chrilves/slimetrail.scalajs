@@ -19,7 +19,7 @@ lazy val commonSettings: Seq[sbt.Def.SettingsDefinition] =
     inThisBuild(
       List(
         organization := "chrilves",
-        scalaVersion := "3.1.3",
+        scalaVersion := "3.2.2",
         version := "0.1.0-SNAPSHOT"
       )),
     updateOptions := updateOptions.value.withCachedResolution(true),
@@ -71,7 +71,7 @@ lazy val web =
     .settings(
       name := "slimetrail-web",
       scalacOptions += "-scalajs",
-      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.2.0",
+      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.4.0",
       scalaJSUseMainModuleInitializer := true
     )
     .dependsOn(slimetrailJS)

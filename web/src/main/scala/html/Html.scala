@@ -48,7 +48,7 @@ sealed abstract class Html[+A] {
       case Tag(namespace, tag, attributes, reactions, children) =>
         val b: Element = document.createElementNS(namespace.uri, tag)
 
-        attributes.foreach { case (Attribute.Key(clef, ns), Attribute.Value(valeur)) =>
+        attributes.foreachEntry { case (Attribute.Key(clef, ns), Attribute.Value(valeur)) =>
           b.setAttributeNS(ns.map(_.value).getOrElse(null), clef, valeur)
         }
 

@@ -19,11 +19,13 @@ lazy val commonSettings: Seq[sbt.Def.SettingsDefinition] =
     inThisBuild(
       List(
         organization := "chrilves",
-        scalaVersion := "3.2.2",
+        scalaVersion := "3.5.0",
         version := "0.1.0-SNAPSHOT"
       )),
     updateOptions := updateOptions.value.withCachedResolution(true),
-    scalacOptions /*in (Compile, console)*/ -= "-Xfatal-warnings",
+    Compile/console/scalacOptions -= "-Xfatal-warnings",
+    scalacOptions -= "-Ykind-projector",
+    scalacOptions ++= Seq("-deprecation", "-Xkind-projector"),
     Compile/compile/wartremoverErrors := warts,
     Compile/console/wartremoverErrors := warts,
     scalafmtOnCompile := true
@@ -71,7 +73,7 @@ lazy val web =
     .settings(
       name := "slimetrail-web",
       scalacOptions += "-scalajs",
-      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.4.0",
+      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.8.0",
       scalaJSUseMainModuleInitializer := true
     )
     .dependsOn(slimetrailJS)

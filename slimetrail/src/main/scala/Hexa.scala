@@ -28,6 +28,9 @@ final class Hexa[+A](val size: Int, cells: Vector[A]):
   /** Return a grid where the position {{{position}}} is {{{value}}} (if this position is within the
     * limits of the grid, otherwise return the input grid)
     */
+  @SuppressWarnings(
+    Array("org.wartremover.warts.SeqUpdated")
+  )
   def set[B >: A](position: Position, value: B): Hexa[B] =
     offset(position) match
       case Some(i) =>
@@ -37,7 +40,9 @@ final class Hexa[+A](val size: Int, cells: Vector[A]):
   def map[B](f: A => B): Hexa[B] =
     new Hexa[B](size, cells.map(f))
 
-  @SuppressWarnings(Array("org.wartremover.warts.MutableDataStructures"))
+  @SuppressWarnings(
+    Array("org.wartremover.warts.MutableDataStructures", "org.wartremover.warts.SeqApply")
+  )
   def indexedMap[B](f: (Position, A) => B): Hexa[B] =
     val builder = Vector.newBuilder[B]
     for i <- 0 to cells.size - 1

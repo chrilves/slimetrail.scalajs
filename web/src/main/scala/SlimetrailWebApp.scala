@@ -134,8 +134,8 @@ final class SlimetrailWebApp(size: Int) extends SlimetrailApp(size) with WebAppl
             points(Point.hexagonRadius1AtOrigin.mkString(" "))
           )()
         ),
-        g(id("hexagons"))(hexagons: _*),
-        g(id("path"))(cheminDesCoups: _*)
+        g(id("hexagons"))(hexagons*),
+        g(id("path"))(cheminDesCoups*)
       ),
       g(id("rules"))(
         svgText(

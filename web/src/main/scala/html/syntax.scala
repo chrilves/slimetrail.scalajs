@@ -47,48 +47,48 @@ object syntax:
     node_(namespace, tag, ar, e)
 
   inline final def div[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("div")(ar: _*)(e: _*)
+    node[A]("div")(ar*)(e*)
   inline final def span[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("span")(ar: _*)(e: _*)
+    node[A]("span")(ar*)(e*)
   inline final def a[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("a")(ar: _*)(e: _*)
+    node[A]("a")(ar*)(e*)
 
   inline final def p[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("p")(ar: _*)(e: _*)
+    node[A]("p")(ar*)(e*)
   inline final def text(s: String): Text = Text(s)
 
   inline final def ul[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("ul")(ar: _*)(e: _*)
+    node[A]("ul")(ar*)(e*)
   inline final def li[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("li")(ar: _*)(e: _*)
+    node[A]("li")(ar*)(e*)
 
   inline final def input[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("input")(ar: _*)(e: _*)
+    node[A]("input")(ar*)(e*)
   inline final def button[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("button")(ar: _*)(e: _*)
+    node[A]("button")(ar*)(e*)
 
   inline final def svg[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("svg", Namespace.SVG)(ar: _*)(e: _*)
+    node[A]("svg", Namespace.SVG)(ar*)(e*)
   inline final def rect[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("rect", Namespace.SVG)(ar: _*)(e: _*)
+    node[A]("rect", Namespace.SVG)(ar*)(e*)
   inline final def polyline[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("polyline", Namespace.SVG)(ar: _*)(e: _*)
+    node[A]("polyline", Namespace.SVG)(ar*)(e*)
   inline final def polygon[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("polygon", Namespace.SVG)(ar: _*)(e: _*)
+    node[A]("polygon", Namespace.SVG)(ar*)(e*)
   inline final def symbol[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("symbol", Namespace.SVG)(ar: _*)(e: _*)
+    node[A]("symbol", Namespace.SVG)(ar*)(e*)
   inline final def g[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("g", Namespace.SVG)(ar: _*)(e: _*)
+    node[A]("g", Namespace.SVG)(ar*)(e*)
   inline final def defs[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("defs", Namespace.SVG)(ar: _*)(e: _*)
+    node[A]("defs", Namespace.SVG)(ar*)(e*)
   inline final def use[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("use", Namespace.SVG)(ar: _*)(e: _*)
+    node[A]("use", Namespace.SVG)(ar*)(e*)
   inline final def svgText[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("text", Namespace.SVG)(ar: _*)(e: _*)
+    node[A]("text", Namespace.SVG)(ar*)(e*)
   inline final def line[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("line", Namespace.SVG)(ar: _*)(e: _*)
+    node[A]("line", Namespace.SVG)(ar*)(e*)
   inline final def styleTag[A](ar: Parameter[A]*)(e: Html[A]*): Tag[A] =
-    node[A]("style", Namespace.HTML)(ar: _*)(e: _*)
+    node[A]("style", Namespace.HTML)(ar*)(e*)
 
   val nop: Parameter[Nothing] = Parameter.Nop
 
@@ -141,7 +141,7 @@ object syntax:
       Parameter.Nop
 
   /** Type of reaction builders */
-  type MakeReaction[A] = js.Function1[_ <: Event, A] => Parameter[A]
+  type MakeReaction[A] = js.Function1[? <: Event, A] => Parameter[A]
 
   inline def on[T <: Event, A](`type`: String)(f: js.Function1[T, A]): Parameter[A] =
     Parameter.Reac(
